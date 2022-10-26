@@ -1,11 +1,14 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 
 <head>
 	<meta charset="ISO-8859-1">
-	<title>PDFCombinator | Home</title>
+	<title>PDFCombinator | Select</title>
 	<link rel="stylesheet" href="css/styles.css">
 </head>
+
 
 <body>
 
@@ -24,12 +27,15 @@
 <!--  Main part of website -->
 
 	<main>
-		<h1>PDFCombinator</h1>
+		<section>
+		
+		<% System.out.println(session.getAttribute("resultFile")); %>
+		<a href="<%= session.getAttribute("resultFile") %>" download>Download PDF</a>
+
+		</section>
 	
 	</main>
 
 
-
 </body>
-
 </html>

@@ -10,20 +10,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/home")
-public class HomeServlet extends HttpServlet {
+@WebServlet("/about")
+public class AboutServlet extends HttpServlet {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		String page = getHTMLString(request.getServletContext().getRealPath("/html/index.html"));
-//		response.getWriter().write(page);
-		
-		request.getRequestDispatcher("/html/index.html").forward(request, response);
+		request.getRequestDispatcher("/html/about.html").forward(request, response);
 	}
 	
 	
@@ -32,21 +29,5 @@ public class HomeServlet extends HttpServlet {
 		doGet(request, response);
 	}
 	
-	
-	public String getHTMLString(String filePath) throws IOException {
-    	BufferedReader reader = new BufferedReader(new FileReader(filePath));
-    	String line = "";
-    	StringBuffer buffer = new StringBuffer();
-    	while ((line=reader.readLine())!= null) {
-    		buffer.append(line);
-    	}
-    	
-    	reader.close();
-    	String page = buffer.toString();
-    	
-//    	page = MessageFormat.format(page);
-    	
-    	return page;
-    }
 
 }

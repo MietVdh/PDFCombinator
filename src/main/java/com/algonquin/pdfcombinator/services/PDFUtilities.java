@@ -14,7 +14,7 @@ public class PDFUtilities {
 	// Get the requested page numbers from the input field 
 	// In same format as you would specify pages to be printed, 
 	// e.g. "1-4, 7, 9-12" would output [1, 2, 3, 4, 7, 9, 10, 11, 12]
-	public int[] extractPageNums(String s) {
+	public static int[] extractPageNums(String s) {
 		int[] pageNums;
 		// RegEx to match only numbers with commas and/or dashes
 		if (s.matches("^\\d+(?:-\\d+)?(?:,\\h*\\d+(?:-\\d+)?)*$")) {
@@ -89,15 +89,87 @@ public class PDFUtilities {
 		
 		return pdfPages;
 	}
+	
+	
+	// Adds specified PDF pages to existing array
+	public static void addPdfPages(List<PDPage> pdfPages, PDDocument pdf, String pageNumbers) {
+		int[] pageNums;
+		
+		// Get correct page numbers
+		pageNums = extractPageNums(pageNumbers);
+		
+		// if no pagenumbers entered, include entire document
+		if (pageNums.length == 0) {
+			for (int i = 0; i < pdf.getNumberOfPages(); i++) {
+				pdfPages.add(pdf.getPage(i));
+			}
+		} else {
+			// Add all requested PDF pages to ArrayList
+			for (int pageNum : pageNums ) {
+				// Make sure page number is valid
+				if (pageNum <= pdf.getNumberOfPages()) {
+					// Adjust page number to zero-based
+					PDPage page = pdf.getPage(pageNum-1);
+					try {
+						pdfPages.add(page);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}	
+			}
+		}
+		
+		
+		// For debugging: print pagenumbers
+		for (int j : pageNums) {
+			System.out.println("Page requested: " + j);
+		}
+		
+		
+	}
+	
+	
+	// Returns a list of pdf pages specified, in the correct order	
+		public ArrayList<PDPage> extractPdfPages(PDDocument pdf, String pageNumbers) {
+			
+			// Initialize variables
+			ArrayList<PDPage> pdfPages = null;
+			int[] pageNums;
+				
+			// Get correct page numbers
+			pageNums = extractPageNums(pageNumbers);
+			
+			// Add all requested PDF pages to ArrayList
+			for (int pageNum : pageNums ) {
+				// Make sure page number is valid
+				if (pageNum <= pdf.getNumberOfPages()) {
+					// Adjust page number to zero-based
+					PDPage page = pdf.getPage(pageNum-1);
+					try {
+						pdfPages.add(page);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}	
+			}
+			return pdfPages;
+		}
 		
 	
 	// Create combined PDF document from separate PDF pages
-	public PDDocument createCombinedPDF(ArrayList<PDPage> pdfList) {
+	public static PDDocument createCombinedPDF(List<PDPage> pdfList) {
 		PDDocument document = new PDDocument();
 		for (PDPage page : pdfList) {
 			document.addPage(page);
 		}
 		return document;
+	}
+	
+	public PDDocument createPdfFromPageNums(PDDocument pdf, String pageNums) {
+		PDDocument resultPDF;
+		resultPDF = createCombinedPDF(extractPdfPages(pdf, pageNums));	
+		
+		return resultPDF;
 	}
 	
 }

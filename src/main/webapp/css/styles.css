@@ -1,1 +1,17 @@
 @charset "ISO-8859-1";
+
+body {
+	margin: 5em;
+	background-color: lavender;
+	color: black;
+}
+
+main {
+	margin-left: auto;
+	margin-right: auto;
+	padding: 1em;
+}
+
+h1 {
+	color: purple;
+}
