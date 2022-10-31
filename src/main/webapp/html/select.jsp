@@ -21,9 +21,10 @@
 	<nav>
 		<ul>
 			<li><a href="/PDFCombinator/home">Home</a></li>
-			<li><a href="/PDFCombinator/register">Register</a></li>
 			<li><a href="/PDFCombinator/about">About</a></li>
 			<li><a href="/PDFCombinator/upload">Upload</a></li>
+			<li><a href="/PDFCombinator/account">Account</a></li>
+			<li><a href="/PDFCombinator/logout">Log Out</a></li>
 		</ul>
 		
 	</nav>

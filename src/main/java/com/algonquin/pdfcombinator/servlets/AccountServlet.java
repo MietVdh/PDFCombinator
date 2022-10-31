@@ -1,6 +1,5 @@
 package com.algonquin.pdfcombinator.servlets;
 
-
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -8,9 +7,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-@WebServlet("/home")
-public class HomeServlet extends HttpServlet {
+import com.algonquin.pdfcombinator.dao.ApplicationDao;
+
+
+@WebServlet("/account")
+public class AccountServlet extends HttpServlet {
 
 	/**
 	 * 
@@ -20,14 +23,14 @@ public class HomeServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		request.getRequestDispatcher("/html/index.html").forward(request, response);
+		// Get username for current session
+		HttpSession session = request.getSession();		
+		String username = (String) session.getAttribute("username");
+		request.getRequestDispatcher("/html/account.html").forward(request, response);
+		
+		ApplicationDao dao = new ApplicationDao();
+		
+		// Get user info from database
 	}
-	
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
-	
 
 }
