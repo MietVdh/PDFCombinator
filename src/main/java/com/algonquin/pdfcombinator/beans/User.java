@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public class User {
 	
-	private UUID id;
+//	private UUID id;
 	private String firstName;
 	private String lastName;
 	private String userName;
@@ -12,7 +12,7 @@ public class User {
 	private String password;
 	
 	public User() {
-		this.id = UUID.randomUUID();
+//		this.id = UUID.randomUUID();
 	}
 	
 	
@@ -25,13 +25,13 @@ public class User {
 		this.password = password;
 	}
 	
-	public void setId(UUID id) {
-		this.id = id;
-	}
-	
-	public void setId(String id) {
-		this.id = UUID.fromString(id);
-	}
+//	public void setId(UUID id) {
+//		this.id = id;
+//	}
+//	
+//	public void setId(String id) {
+//		this.id = UUID.fromString(id);
+//	}
 	
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
@@ -53,9 +53,9 @@ public class User {
 		this.password = password;
 	}
 	
-	public UUID getID() {
-		return this.id;
-	}
+//	public UUID getID() {
+//		return this.id;
+//	}
 	
 	public String getFirstName() {
 		return this.firstName;

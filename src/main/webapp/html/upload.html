@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>PDFCombinator | Upload</title>
+	<link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+<!--  Nav Bar  -->
+
+	<nav>
+		<ul>
+			<li><a href="/PDFCombinator/home">Home</a></li>
+			<li><a href="/PDFCombinator/about">About</a></li>
+			<li><a href="/PDFCombinator/upload">Upload</a></li>
+			<li><a href="/PDFCombinator/account">Account</a></li>
+			<li><a href="/PDFCombinator/logout">Log Out</a></li>
+		</ul>
+		
+	</nav>
+	
+<!--  Main part of website -->
+
+	<main>
+		<h1>Upload PDFs</h1>
+		
+		<form action="/PDFCombinator/upload" method="post" enctype="multipart/form-data">
+			<fieldset>
+				<label for="file1">Upload the first source PDF file: </label>
+				<input type="file" name="file1" accept=".pdf"/>
+				<label for="file1name">Optional: enter a name for this file</label>
+				<input type="text" name="file1name"/>
+			</fieldset>
+			<br>
+			<fieldset>
+				<label for="file2">Upload the second source PDF file: </label>
+				<input type="file" name="file2" accept=".pdf"/>			
+				<label for="file2name">Optional: enter a name for this file</label>
+				<input type="text" name="file2name"/>			
+			</fieldset>
+			<br>			
+			<fieldset>
+				<label for="file3">Upload the third source PDF file: </label>
+				<input type="file" name="file3" accept=".pdf"/>			
+				<label for="file3name">Optional: enter a name for this file</label>
+				<input type="text" name="file3name"/>			
+			</fieldset>
+						
+			<button type="submit">Upload</button>
+		
+		</form>
+	
+	</main>
+
+
+
+</body>
+
+</html>
