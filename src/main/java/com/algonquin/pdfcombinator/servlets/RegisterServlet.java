@@ -56,7 +56,7 @@ public class RegisterServlet extends HttpServlet {
 		
 		
 		
-		// Send confirmation email
+		// Send verification email
 		
 		
 		// Forward to confirmation page

@@ -23,11 +23,11 @@ public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	
-	
+	String errorMessage = "";
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			
-			request.getRequestDispatcher("/html/login.html").forward(request, response);
+			request.getRequestDispatcher("/html/login.jsp").forward(request, response);
 		}
 	
 	
@@ -39,18 +39,22 @@ public class LoginServlet extends HttpServlet {
 		
 		// Search for user in database 
 		ApplicationDao dao = new ApplicationDao();
-		if (!dao.validateUser(username, password)) {
+		boolean isValidUser = dao.validateUser(username, password);
+		
+		if (!isValidUser) {
 			//error
+			errorMessage = "Invalid username or password. Please try again.";
+			request.setAttribute("error", errorMessage);
+			doGet(request, response);
+			
 		} else {
 			// log in
 			HttpSession session = request.getSession();
 			session.setAttribute("username", username);
 			
-			request.getRequestDispatcher("/html/account.html").forward(request, response);
+			request.getRequestDispatcher("account").forward(request, response);
 		}
-		
-		
-		doGet(request, response);
+
 	}
 
 }

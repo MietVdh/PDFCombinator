@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+//import com.algonquin.pdfcombinator.beans.DBUser;
 import com.algonquin.pdfcombinator.beans.User;
 
 public class ApplicationDao {
@@ -47,20 +48,21 @@ public class ApplicationDao {
 
 	public User getUserByUsername(String username) {
 		
-		User user = null;
+		User user = new User();
 		
 		// connect to DB
 		Connection connection = DBConnection.connectToDB();
 		
 		// Query DB
-		String query = "SELECT * FROM users WHERE username = (?)";
+		String query = "SELECT * FROM users WHERE username = ?;";
 		
 		try {
-			PreparedStatement statement = connection.prepareStatement(query);
+			PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			statement.setString(1, username);
 			
 			// retrieve result
-			ResultSet result = statement.getResultSet();
+			ResultSet result = statement.executeQuery();
+			result.first();
 			String password = result.getString(COL_PASSWORD);
 			String firstName = result.getString(COL_FIRST_NAME);
 			String lastName = result.getString(COL_LAST_NAME);
@@ -89,7 +91,7 @@ public class ApplicationDao {
 		Connection connection = DBConnection.connectToDB();
 		
 		// Query DB
-		String query = "SELECT * FROM users WHERE username = (?) AND password = (?)";
+		String query = "SELECT * FROM users WHERE username = ? AND password = ?";
 		
 		try {
 			PreparedStatement statement = connection.prepareStatement(query);
@@ -97,13 +99,35 @@ public class ApplicationDao {
 			statement.setString(2,  password);
 			
 			// retrieve result
-			validated = statement.execute();
+			ResultSet set = statement.executeQuery();
+			while (set.next()) {
+				validated = true;
+			}
+			
 
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}
 		
 		return validated;
+	}
+
+	public boolean isUsernameAvailable(String newUsername) {
+		// Check if desired new username is available, i.e. is not yet registered
+		// TODO 
+		return false;
+	}
+	
+
+	public boolean updateUsername(String oldUsername, String newUsername) {
+		boolean success = false;
+		if (isUsernameAvailable(newUsername)) {
+			// TODO update username
+			
+			success = true;
+		}
+		return success;
+		
 	}
 
 }
