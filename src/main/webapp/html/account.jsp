@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@page import="com.algonquin.pdfcombinator.beans.User" %>
+<%@page import="com.algonquin.pdfcombinator.dao.ApplicationDao" %>
 <!DOCTYPE html>
 <html>
 
@@ -31,13 +33,20 @@
 		<section>
 		
 		<% 
-		String username = (String) request.getAttribute("username");
-		String password = (String) request.getAttribute("password");
-		String firstName = (String) request.getAttribute("firstName");
-		String lastName = (String) request.getAttribute("lastName");
-		String email = (String) request.getAttribute("email");
+		String username = (String) session.getAttribute("username");
+		
+		ApplicationDao dao = new ApplicationDao();
+		
+		User user = dao.getUserByUsername(username);
+		
+		String firstName = user.getFirstName();
+		String lastName = user.getLastName();
+		String email = user.getEmail();
 		
 		%>
+		<section class="message">
+			<p><%= request.getAttribute("message") %></p>
+		</section>
 		
 		<form action="/PDFCombinator/account" method="post">
 		
@@ -57,7 +66,7 @@
 		
 		</form>
 		
-		<form action="PDFCombinator/updatepassword" method="post">
+		<form action="/PDFCombinator/updatepassword" method="post">
 		
 			<label for="old-password">Current password</label>
 			<input type="password" name="old-password" id="old-password" required><br>
@@ -72,10 +81,6 @@
 		
 		</form>
 		
-		
-		
-		
-		</form>
 		
 		</section>
 	

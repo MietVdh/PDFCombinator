@@ -19,7 +19,7 @@ private static final long serialVersionUID = 1L;
 	
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/html/updatepassword.html").forward(request, response);
+		request.getRequestDispatcher("/html/account.jsp").forward(request, response);
 	}
 	
 	
@@ -28,14 +28,14 @@ private static final long serialVersionUID = 1L;
 		
 		ApplicationDao dao = new ApplicationDao();
 		// Get username for current session
-		HttpSession session = request.getSession();		
+		HttpSession session = request.getSession(false);		
 		String username = (String) session.getAttribute("username");
 		User user = dao.getUserByUsername(username);
 		
 		String password = user.getPassword();
 		
 		boolean success = false;
-		String error = "";
+		String message = "";
 		
 		// Check if old password entered matches password in database
 		String oldPassword = request.getParameter("old-password");
@@ -47,28 +47,30 @@ private static final long serialVersionUID = 1L;
 				// TODO update password in database. 
 				success = true;
 			} else {
-				error = "New passwords don't match. Please try again.";
+				message = "New passwords don't match. Please try again.";
 			}
 			
 		} else {
-			error = "Incorrect current password. Please try again.";		
+			message = "Incorrect current password. Please try again.";		
 		}
+		
 		
 		if (success) {
 			// Display confirmation message 
+			message = "Password updated successfully";
+			System.out.println(message);
 			
 		} else {
-			request.setAttribute("error",  error);
-			request.setAttribute("username", username);
-			request.setAttribute("password", user.getPassword());
-			request.setAttribute("firstName", user.getFirstName());
-			request.setAttribute("lastName", user.getLastName());
-			request.setAttribute("email", user.getEmail());
-			request.getRequestDispatcher("/html/account.jsp").forward(request, response);
+			message = "Sorry, we were not able to update your password";
+			
+			
+			
 		}
 		
+		request.setAttribute("message",  message);
+		request.getRequestDispatcher("/html/account.jsp").forward(request, response);
 		
-		doGet(request, response);
+//		doGet(request, response);
 	}
 
 }
