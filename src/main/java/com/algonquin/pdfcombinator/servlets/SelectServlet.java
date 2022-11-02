@@ -1,16 +1,7 @@
 package com.algonquin.pdfcombinator.servlets;
 
-import java.io.BufferedReader;
 import java.io.File;
-//import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 //import java.util.UUID;
@@ -80,6 +71,7 @@ public class SelectServlet extends HttpServlet {
 	}
 	
 	
+	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		System.out.println("In SelectServlet doPost()");

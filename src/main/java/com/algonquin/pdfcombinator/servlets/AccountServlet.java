@@ -24,23 +24,23 @@ public class AccountServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		ApplicationDao dao = new ApplicationDao();
-		
 		// Get username for current session
-		HttpSession session = request.getSession();		
-		String username = (String) session.getAttribute("username");
-		User user = dao.getUserByUsername(username);
-		request.setAttribute("username", username);
-		request.setAttribute("password", user.getPassword());
-		request.setAttribute("firstName", user.getFirstName());
-		request.setAttribute("lastName", user.getLastName());
-		request.setAttribute("email", user.getEmail());
+//		HttpSession session = request.getSession(false);		
+//		String username = (String) session.getAttribute("username");
+//		User user = dao.getUserByUsername(username);
+//		request.setAttribute("username", username);
+//		request.setAttribute("password", user.getPassword());
+//		request.setAttribute("firstName", user.getFirstName());
+//		request.setAttribute("lastName", user.getLastName());
+//		request.setAttribute("email", user.getEmail());
 		request.getRequestDispatcher("/html/account.jsp").forward(request, response);
 		
 		// Get user info from database
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String message = "";
 		
 		ApplicationDao dao = new ApplicationDao();
 		// Get username for current session
@@ -53,36 +53,54 @@ public class AccountServlet extends HttpServlet {
 		String email = user.getEmail();
 		
 		// Get info from form
-		String newUsername = request.getParameter("account-username");
-		String newFirstName = request.getParameter("account-first-name");
-		String newLastName = request.getParameter("account-last-name");
-		String newEmail = request.getParameter("account-email");
+		String newUsername = request.getParameter("username");
+		String newFirstName = request.getParameter("firstname");
+		String newLastName = request.getParameter("lastname");
+		String newEmail = request.getParameter("email");
 
 		// Check which fields have been updated
 		if (newUsername.equals("") || newUsername == null) {
 			// nothing happens to username
+			System.out.println("Username stays the same");
 		} else if (!newUsername.equals(username)) {
 			// check new username is available
 			
 			if (dao.updateUsername(username, newUsername)) {
 				// successfully updated username; 
-				// TODO display message
+				session.setAttribute("username", newUsername);
+				username = newUsername;
+				System.out.println("Username updated to " + session.getAttribute("username"));
+
 			} else {
-				// TODO display error message
-			}
-			
+				System.out.println("That username is not available");
+			}			
 		}
 		
 		if (!newFirstName.equals(firstName) && !newFirstName.equals("") && newFirstName != null) {
-			// TODO update first name
+			if (dao.updateFirstName(username, newFirstName)) {
+				System.out.println("First name updated");
+			} else {
+				message += "Could not update first name\n";
+				System.out.println(message);
+			}
 		}
 		
 		if (!newLastName.equals(lastName) && !newLastName.equals("") && newLastName != null) {
-			// TODO update last name
+			if (dao.updateLastName(username, newLastName)) {
+				System.out.println("Last name updated");
+			} else {
+				message += "Could not update last name\n";
+				System.out.println(message);
+			}
 		}
 		
 		if (!newEmail.equals(email) && !newEmail.equals("") && newEmail != null) {
-			// TODO update email
+			if (dao.updateEmail(username, newEmail)) {
+				System.out.println("Email updated");
+			} else {
+				message += "Could not update email\n";
+				System.out.println(message);
+			}
 			// TODO send verification email!
 		}
 		

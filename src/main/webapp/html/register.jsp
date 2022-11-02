@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,31 +28,37 @@
 	<main>
 		<h1>Register</h1>
 		
+		<section class="message">
+			<% if (request.getAttribute("message") != null) { %>
+			<%= request.getAttribute("message") %>
+			<% } %>
+		</section>
+		
 <!--  Registration form  -->
 
 		<form action="/PDFCombinator/register" method="post">
 			<label for="fname">First Name</label>
-			<input type="text" name="fname"/>
+			<input type="text" name="fname" required/>
 			<br>
 			
 			<label for="lname">Last Name</label>
-			<input type="text" name="lname"/>
+			<input type="text" name="lname" required/>
 			<br>
 			
 			<label for="uname">Username</label>
-			<input type="text" name="uname"/>
+			<input type="text" name="uname" required/>
 			<br>
 			
 			<label for="email">Email Address</label>
-			<input type="email" name="email"/>
+			<input type="email" name="email" required/>
 			<br>
 		
 			<label for="password">Password</label>
-			<input type="password" name="password"/>
+			<input type="password" name="password" required/>
 			<br>
 			
 			<label for="password2">Re-enter Password</label>
-			<input type="password" name="password2"/>
+			<input type="password" name="password2" required/>
 			<br>
 			
 			<button type="submit">Register</button>
