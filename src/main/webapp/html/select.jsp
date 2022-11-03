@@ -20,12 +20,12 @@
 <!--  Nav Bar  -->
 
 	<nav class="navbar p-4" role="navigation" aria-label="main navigation">
-		<div id="navbarBasicExample" class="navbar-menu">
-	    	<div class="navbar-start">
-		    	<a class="navbar-item" href="/PDFCombinator/home">Home</a>
-				<a class="navbar-item" href="/PDFCombinator/about">About</a>
-			</div>
-			
+		<div class="navbar-brand">
+			<a class="navbar-item" href="/PDFCombinator/home">Home</a>
+			<a class="navbar-item" href="/PDFCombinator/about">About</a>
+		</div>
+		<div id="navbarBasicExample" class="navbar-menu is-active">
+	    	
 			<div class="navbar-end">
 				<a class="navbar-item" href="/PDFCombinator/upload">Upload</a>
 				<a class="navbar-item" href="/PDFCombinator/account">Account</a>

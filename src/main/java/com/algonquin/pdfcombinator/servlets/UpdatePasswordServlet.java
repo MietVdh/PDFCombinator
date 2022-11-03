@@ -29,7 +29,7 @@ private static final long serialVersionUID = 1L;
 		// Check if user is logged in
 		HttpSession session = request.getSession(false);
 		if (session == null || session.getAttribute("username") == null ) {
-			// User is not logged in; send to login page
+			// User is not logged in
 			request.getRequestDispatcher("/html/login.jsp").forward(request, response);
 		}
 		
@@ -52,8 +52,9 @@ private static final long serialVersionUID = 1L;
 			String newPassword1 = request.getParameter("new-password1");
 			String newPassword2 = request.getParameter("new-password2");
 			if (newPassword1.equals(newPassword2)) {
-				// TODO update password in database. 
-				success = true;
+				if (dao.updatePassword(username, newPassword1)) {	
+					success = true;
+				}
 			} else {
 				message = "New passwords don't match. Please try again.";
 			}
@@ -70,15 +71,12 @@ private static final long serialVersionUID = 1L;
 			
 		} else {
 			message = "Sorry, we were not able to update your password";
-			
-			
-			
+		
 		}
 		
 		request.setAttribute("message",  message);
 		request.getRequestDispatcher("/html/account.jsp").forward(request, response);
-		
-//		doGet(request, response);
+
 	}
 
 }

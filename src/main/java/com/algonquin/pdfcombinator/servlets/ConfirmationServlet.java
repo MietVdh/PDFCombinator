@@ -1,7 +1,5 @@
 package com.algonquin.pdfcombinator.servlets;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -20,8 +18,7 @@ public class ConfirmationServlet extends HttpServlet {
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String page = getHTMLString(request.getServletContext().getRealPath("/html/confirm.html"));
-		response.getWriter().write(page);
+		getServletContext().getRequestDispatcher("/html/confirm.html").forward(request, response);
 	}
 	
 	
@@ -29,21 +26,4 @@ public class ConfirmationServlet extends HttpServlet {
 		doGet(request, response);
 	}
 	
-	
-	public String getHTMLString(String filePath) throws IOException {
-    	BufferedReader reader = new BufferedReader(new FileReader(filePath));
-    	String line = "";
-    	StringBuffer buffer = new StringBuffer();
-    	while ((line=reader.readLine())!= null) {
-    		buffer.append(line);
-    	}
-    	
-    	reader.close();
-    	String page = buffer.toString();
-    	
-//    	page = MessageFormat.format(page);
-    	
-    	return page;
-    }
-
 }

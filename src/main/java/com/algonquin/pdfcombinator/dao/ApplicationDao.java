@@ -52,7 +52,7 @@ public class ApplicationDao {
 	}
 	
 	
-	public boolean verifyEmail(String id, String code) {
+	public boolean verifyCode(String id, String code) {
 		boolean verified = false;
 		
 		// connect to DB
@@ -149,6 +149,87 @@ public class ApplicationDao {
 		return user;
 	}
 	
+public User getUserByEmail(String email) {
+		
+		User user = new User();
+		
+		// connect to DB
+		Connection connection = DBConnection.connectToDB();
+		
+		// Query DB
+		String query = "SELECT * FROM users WHERE email = ?";
+		
+		try {
+			PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			statement.setString(1, email);
+			
+			// retrieve result
+			ResultSet result = statement.executeQuery();
+			result.first();
+			String id = result.getString(COL_ID);
+			String username = result.getString(COL_USERNAME);
+			String password = result.getString(COL_PASSWORD);
+			String firstName = result.getString(COL_FIRST_NAME);
+			String lastName = result.getString(COL_LAST_NAME);
+			
+			// Load result into user bean
+			user.setId(id);
+			user.setUserName(username);
+			user.setEmail(email);
+			user.setFirstName(firstName);
+			user.setLastName(lastName);
+			user.setPassword(password);
+			
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+
+		// Return user object
+		return user;
+	}
+	
+public User getUserById(String id) {
+	
+	User user = new User();
+	
+	// connect to DB
+	Connection connection = DBConnection.connectToDB();
+	
+	// Query DB
+	String query = "SELECT * FROM users WHERE uuid = ?";
+	
+	try {
+		PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+		statement.setString(1, id);
+		
+		// retrieve result
+		ResultSet result = statement.executeQuery();
+		result.first();
+		String email = result.getString(COL_EMAIL);
+		String username = result.getString(COL_USERNAME);
+		String password = result.getString(COL_PASSWORD);
+		String firstName = result.getString(COL_FIRST_NAME);
+		String lastName = result.getString(COL_LAST_NAME);
+		
+		// Load result into user bean
+		user.setId(id);
+		user.setUserName(username);
+		user.setEmail(email);
+		user.setFirstName(firstName);
+		user.setLastName(lastName);
+		user.setPassword(password);
+		
+		
+	} catch(SQLException e) {
+		e.printStackTrace();
+	}
+
+	// Return user object
+	return user;
+}
+
+
 	public boolean activateAccount(String id) {
 		boolean activated = false;
 		
@@ -408,6 +489,81 @@ public class ApplicationDao {
 		
 		return success;
 		
+	}
+	
+	public boolean updatePassword(String username, String password) {
+		boolean success = false;
+		//connect to DB
+		Connection connection = DBConnection.connectToDB();
+		
+		//write insert query to DB
+		String query = "UPDATE users SET password = ? WHERE username = ?";
+		
+		try {
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, password);
+			statement.setString(2, username);
+			
+			int rowsAffected = statement.executeUpdate();
+			if (rowsAffected == 1) {
+				success = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return success;
+		
+	}
+	
+	
+	public boolean deleteUser(String username) {
+		boolean success = false;
+		
+		//connect to DB
+		Connection connection = DBConnection.connectToDB();
+		
+		//write query to DB
+		String query = "DELETE FROM users WHERE username=?";
+		
+		try {
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, username);
+			
+			int rowsAffected = statement.executeUpdate();
+			if (rowsAffected == 1) {
+				success = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return success;
+	}
+	
+	public boolean addCode(String code, String email) {
+		boolean success = false;
+		
+		//connect to DB
+		Connection connection = DBConnection.connectToDB();
+		
+		//write insert query to DB
+		String query = "UPDATE users SET code=? WHERE email=?";
+		
+		try {
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, code);
+			statement.setString(2, email);
+			
+			int rowsAffected = statement.executeUpdate();
+			if (rowsAffected == 1) {
+				success = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return success;
 	}
 	
 	

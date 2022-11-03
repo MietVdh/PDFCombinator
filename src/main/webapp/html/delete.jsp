@@ -6,7 +6,7 @@
 <head>
 	<meta charset="ISO-8859-1">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>PDFCombinator | About</title>
+	<title>PDFCombinator | Account Deleted</title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 	<link rel="stylesheet" href="css/styles.css">
 </head>
@@ -21,40 +21,24 @@
 			<a class="navbar-item" href="/PDFCombinator/about">About</a>
 		</div>
 		<div id="navbarBasicExample" class="navbar-menu is-active">
-			
-			<div class="navbar-end">
-			<% if (session.getAttribute("username") == null) {
-				out.println(
-						"<a class=\"navbar-item\" href=\"/PDFCombinator/register\">Register</a> "
-						+ "<a class=\"navbar-item\" href=\"/PDFCombinator/login\">Log In</a>");
-				
-			} else {
-				out.println(
-						"<a class=\"navbar-item\" href=\"/PDFCombinator/upload\">Upload</a> " 
-						+ "<a class=\"navbar-item\" href=\"/PDFCombinator/account\">Account</a>"
-						+ "<a class=\"navbar-item\" href=\"/PDFCombinator/logout\">Log Out</a>");
-			}
-			%>
-	
+	    	<div class="navbar-end">
+	      		<a class="navbar-item" href="/PDFCombinator/register">Register</a>
+	      		<a class="navbar-item" href="/PDFCombinator/login">Log In</a>
 	      	</div>
 	    </div>
 		
 	</nav>
 	
-<!--  Main part of website -->	
+<!--  Main part of website -->
 
 	<main class="container pb-6">
 	
 		<section class="content py-4">
-	
-			<h1 class="title" >About PDFCombinator</h1>
-		
+			<h1 class="title">Account Deleted</h1>
 		</section>
 		
 		<section class="content">
-			<p>PDFCombinator is the result of a group project assignment as part of the Computer Programming diploma programme at Algonquin College. </p>
-			<p>Our website allows you to upload PDFs, select the pages you want to use for each of the documents, and combine the documents to create a new PDF.</p>
-			
+			<p>Your account has been deleted. Thank you for using <a href="/PDFCombinator/">PDFCombinator</a>.</p>
 		
 		</section>
 	
@@ -69,5 +53,7 @@
 	  </div>
 	</footer>
 
+
 </body>
 
+</html>

@@ -18,12 +18,11 @@
 <!--  Nav Bar  -->
 
 	<nav class="navbar p-4" role="navigation" aria-label="main navigation">
-		<div id="navbarBasicExample" class="navbar-menu">
-	    	<div class="navbar-start">
-		    	<a class="navbar-item" href="/PDFCombinator/home">Home</a>
-				<a class="navbar-item" href="/PDFCombinator/about">About</a>
-			</div>
-			
+		<div class="navbar-brand">
+			<a class="navbar-item" href="/PDFCombinator/home">Home</a>
+			<a class="navbar-item" href="/PDFCombinator/about">About</a>
+		</div>
+		<div id="navbarBasicExample" class="navbar-menu is-active">
 			<div class="navbar-end">
 				<a class="navbar-item" href="/PDFCombinator/upload">Upload</a>
 				<a class="navbar-item" href="/PDFCombinator/account">Account</a>
@@ -97,7 +96,7 @@
 			
 			</form>
 		
-			<form action="/PDFCombinator/updatepassword" method="post">
+			<form class="box" action="/PDFCombinator/updatepassword" method="post">
 			
 				<div class="field">
 					<label class="label" for="old-password">Current password</label>
@@ -124,6 +123,25 @@
 			
 				<button class="button">Update password</button>
 			
+			</form>
+			
+			<form class="box" action="/PDFCombinator/delete" method="post">
+			
+				<article class="message is-danger">
+				  <div class="message-header">
+				    <p>Delete account</p>
+				  </div>
+				  <div class="message-body">
+				  	<p>Deleting your account will remove all your information from our database. This action cannot be undone!</p>
+				  </div>
+				</article>
+				<div class="field">
+					<label class="label" for="delete-password">Please enter your current password to confirm:</label>
+					<div class="control">
+						<input class="input" type="password" name="password" id="delete-password">
+					</div>
+				</div>
+				<button class="button is-danger">Delete Account</button>
 			</form>
 			
 		

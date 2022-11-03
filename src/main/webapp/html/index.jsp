@@ -16,11 +16,12 @@
 <!--  Nav Bar  -->
 
 	<nav class="navbar p-4" role="navigation" aria-label="main navigation">
-		<div id="navbarBasicExample" class="navbar-menu">
-	    	<div class="navbar-start">
-		    	<a class="navbar-item" href="/PDFCombinator/home">Home</a>
-				<a class="navbar-item" href="/PDFCombinator/about">About</a>
-			</div>
+		<div class="navbar-brand">
+			<a class="navbar-item" href="/PDFCombinator/home">Home</a>
+			<a class="navbar-item" href="/PDFCombinator/about">About</a>
+		</div>
+		<div id="navbarBasicExample" class="navbar-menu is-active">
+	    	
 			
 			<div class="navbar-end">
 			<% if (session.getAttribute("username") == null) {
@@ -40,20 +41,6 @@
 	    </div>
 		
 	</nav>
-
-	<!--  
-	
-	<a class="navbar-item" href="/PDFCombinator/home">Home</a>
-	<a class="navbar-item" href="/PDFCombinator/about">About</a>
-	
-	<a class="navbar-item" href="/PDFCombinator/register">Register</a>
-	<a class="navbar-item" href="/PDFCombinator/login">Log In</a>
-	
-	<a class="navbar-item" href="/PDFCombinator/upload">Upload</a>
-	<a class="navbar-item" href="/PDFCombinator/account">Account</a>
-	<a class="navbar-item" href="/PDFCombinator/logout">Log Out</a>
-	
-	 -->
 	
 <!--  Main part of website -->
 
@@ -61,6 +48,18 @@
 	
 		<section class="content py-4">
 			<h1 class="title" >PDFCombinator</h1>
+		</section>
+		
+		<section class="content message">
+			<% String message;
+			if (request.getAttribute("message") == null) {
+				message = " ";
+			} else {
+				message = (String) request.getAttribute("message");
+			}
+			%>
+
+			<p><%=message %></p>
 		</section>
 		
 		<section class="content">
