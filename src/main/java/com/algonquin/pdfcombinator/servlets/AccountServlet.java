@@ -27,18 +27,8 @@ public class AccountServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// Get username for current session
-//		HttpSession session = request.getSession(false);		
-//		String username = (String) session.getAttribute("username");
-//		User user = dao.getUserByUsername(username);
-//		request.setAttribute("username", username);
-//		request.setAttribute("password", user.getPassword());
-//		request.setAttribute("firstName", user.getFirstName());
-//		request.setAttribute("lastName", user.getLastName());
-//		request.setAttribute("email", user.getEmail());
 		request.getRequestDispatcher("/html/account.jsp").forward(request, response);
-		
-		// Get user info from database
+
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
