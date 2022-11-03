@@ -15,3 +15,7 @@ main {
 h1 {
 	color: purple;
 }
+
+.title {
+	padding-bottom: 3em;
+}

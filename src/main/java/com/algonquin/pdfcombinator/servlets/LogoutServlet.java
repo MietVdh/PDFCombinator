@@ -21,9 +21,23 @@ public class LogoutServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession(false);
-		session.invalidate();
+		if (session == null) {
+			System.out.println("Session was already null");
+		} else {
+			session.invalidate();
+			System.out.println("Session has been invalidated");
+		}
 		
-		request.getRequestDispatcher("/html/index.html").forward(request, response);
+		while (request.getAttributeNames().hasMoreElements()) {
+			String attribute = request.getAttributeNames().nextElement();
+			request.removeAttribute(attribute);
+		}
+		
+		request.getRequestDispatcher("/html/index.jsp").forward(request, response);
+	}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
 	}
 	
 

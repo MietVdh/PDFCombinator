@@ -15,9 +15,11 @@ public class ApplicationDao {
 	private final String COL_PASSWORD = "password";
 	private final String COL_EMAIL = "email";
 	private final String COL_ACTIVE	 = "is_active"; // column 7
+	private final String COL_CODE = "code";
+	private final String COL_NEW_EMAIL = "new_email";
 	
 	
-	public int registerUser(User user) {
+	public int registerUser(User user, String code) {
 		
 		int rowsAffected = 0;
 		
@@ -26,7 +28,7 @@ public class ApplicationDao {
 			Connection connection = DBConnection.connectToDB();
 			
 			//write insert query to DB
-			String insertQuery = "INSERT INTO users VALUES(?,?,?,?,?,?,?)";
+			String insertQuery = "INSERT INTO users (uuid, first_name, last_name, username, password, new_email, code ) VALUES(?,?,?,?,?,?,?)";
 			
 			//set parameters with PreparedStatement
 			PreparedStatement statement = connection.prepareStatement(insertQuery);
@@ -36,7 +38,8 @@ public class ApplicationDao {
 			statement.setString(4, user.getUserName());
 			statement.setString(5, user.getPassword());
 			statement.setString(6, user.getEmail());
-			statement.setInt(7, 0); // set is_active to false initially
+			statement.setString(7, code);
+	
 			
 			//execute statement
 			rowsAffected = statement.executeUpdate();
@@ -47,6 +50,37 @@ public class ApplicationDao {
 		
 		return rowsAffected;
 	}
+	
+	
+	public boolean verifyEmail(String id, String code) {
+		boolean verified = false;
+		
+		// connect to DB
+		Connection connection = DBConnection.connectToDB();
+		
+		// Query DB
+		String query = "SELECT * FROM users WHERE uuid = ? AND code = ?";
+		
+		try {
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, id);
+			statement.setString(2,  code);
+			
+			// retrieve result
+			ResultSet set = statement.executeQuery();
+			if (set.next()) {
+				verified = true;
+			}
+			
+
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return verified;
+	}
+	
+	
 	
 	public boolean isUsernameAvailable(String username) {
 		boolean available = false;
@@ -115,19 +149,18 @@ public class ApplicationDao {
 		return user;
 	}
 	
-	public boolean activateAccount(String username) {
+	public boolean activateAccount(String id) {
 		boolean activated = false;
 		
 		//connect to DB
 		Connection connection = DBConnection.connectToDB();
 		
 		//write insert query to DB
-		String query = "UPDATE users SET is_active = ? WHERE username = ?";
+		String query = "UPDATE users SET is_active = 1 WHERE uuid = ?";
 		
 		try {
 			PreparedStatement statement = connection.prepareStatement(query);
-			statement.setInt(1, 1);
-			statement.setString(1, username);
+			statement.setString(1, id);
 			
 			int rowsAffected = statement.executeUpdate();
 			if (rowsAffected == 1) {
@@ -136,6 +169,8 @@ public class ApplicationDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+		System.out.println("User account activated: " + activated);
 		
 		return activated;
 		
@@ -283,7 +318,7 @@ public class ApplicationDao {
 		Connection connection = DBConnection.connectToDB();
 		
 		//write insert query to DB
-		String query = "UPDATE users SET email = ? WHERE username = ?";
+		String query = "UPDATE users SET new_email = ? WHERE username = ?";
 		
 		try {
 			PreparedStatement statement = connection.prepareStatement(query);
@@ -298,8 +333,83 @@ public class ApplicationDao {
 			e.printStackTrace();
 		}
 		
+		return success;		
+	}
+	
+	public boolean updateVerifiedEmail(String id, String code) {
+		boolean success = false;
+		//connect to DB
+		Connection connection = DBConnection.connectToDB();
+		
+		// select query to retrieve new email
+		
+		String newEmail = "";
+		String selectQuery = "SELECT new_email FROM users WHERE uuid = ?";
+		
+		try {
+			PreparedStatement statement = connection.prepareStatement(selectQuery);
+			statement.setString(1, id);
+			
+			// retrieve result
+			ResultSet set = statement.executeQuery();
+			if (set.next()) {
+				newEmail = set.getString("new_email");
+				System.out.println("We retrieved the new email address: " + newEmail);
+			}
+			
+
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//write insert query to DB
+		String updateQuery = "UPDATE users SET email = ?, new_email = NULL WHERE uuid = ? AND code = ?";
+		
+		try {
+			PreparedStatement updateStatement = connection.prepareStatement(updateQuery);
+			updateStatement.setString(1, newEmail);
+			updateStatement.setString(2, id);
+			updateStatement.setString(3, code);
+			
+			int rowsAffected = updateStatement.executeUpdate();
+			if (rowsAffected == 1) {
+				success = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		this.activateAccount(id);
+		
+		System.out.println("Updated verified email: " + success);
+		return success;		
+	}
+
+	public boolean updateCode(String username, String code) {
+		boolean success = false;
+		//connect to DB
+		Connection connection = DBConnection.connectToDB();
+		
+		//write insert query to DB
+		String query = "UPDATE users SET code = ? WHERE username = ?";
+		
+		try {
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, code);
+			statement.setString(2, username);
+			
+			int rowsAffected = statement.executeUpdate();
+			if (rowsAffected == 1) {
+				success = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 		return success;
 		
 	}
-
+	
+	
+	
 }

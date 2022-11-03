@@ -26,10 +26,18 @@ private static final long serialVersionUID = 1L;
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		ApplicationDao dao = new ApplicationDao();
+		// Check if user is logged in
+		HttpSession session = request.getSession(false);
+		if (session == null || session.getAttribute("username") == null ) {
+			// User is not logged in; send to login page
+			request.getRequestDispatcher("/html/login.jsp").forward(request, response);
+		}
+		
 		// Get username for current session
-		HttpSession session = request.getSession(false);		
 		String username = (String) session.getAttribute("username");
+		
+		ApplicationDao dao = new ApplicationDao();
+		
 		User user = dao.getUserByUsername(username);
 		
 		String password = user.getPassword();

@@ -26,13 +26,14 @@ public class LoginServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		HttpSession session = request.getSession(false);
 		// Check if user is already logged in
-		if (request.getSession(false) != null) {
+		if (session == null || session.getAttribute("username") == null ) {
+			// User is not logged in; send to login page
+			request.getRequestDispatcher("/html/login.jsp").forward(request, response);
+		} else {
 			// user is logged in - send to account page
 			request.getRequestDispatcher("/html/account.jsp").forward(request, response);
-		} else {
-			// direct user to login page
-			request.getRequestDispatcher("/html/login.jsp").forward(request, response);
 		}
 		
 		
