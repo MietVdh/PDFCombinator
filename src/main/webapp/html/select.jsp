@@ -9,32 +9,43 @@
 
 <head>
 	<meta charset="ISO-8859-1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>PDFCombinator | Select</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 	<link rel="stylesheet" href="css/styles.css">
 </head>
-
 
 <body>
 
 <!--  Nav Bar  -->
 
-	<nav>
-		<ul>
-			<li><a href="/PDFCombinator/home">Home</a></li>
-			<li><a href="/PDFCombinator/about">About</a></li>
-			<li><a href="/PDFCombinator/upload">Upload</a></li>
-			<li><a href="/PDFCombinator/account">Account</a></li>
-			<li><a href="/PDFCombinator/logout">Log Out</a></li>
-		</ul>
+	<nav class="navbar p-4" role="navigation" aria-label="main navigation">
+		<div id="navbarBasicExample" class="navbar-menu">
+	    	<div class="navbar-start">
+		    	<a class="navbar-item" href="/PDFCombinator/home">Home</a>
+				<a class="navbar-item" href="/PDFCombinator/about">About</a>
+			</div>
+			
+			<div class="navbar-end">
+				<a class="navbar-item" href="/PDFCombinator/upload">Upload</a>
+				<a class="navbar-item" href="/PDFCombinator/account">Account</a>
+				<a class="navbar-item" href="/PDFCombinator/logout">Log Out</a>
+			</div>
+	    </div>
 		
 	</nav>
 	
 <!--  Main part of website -->
 
-	<main>
-		<h1>PDFCombinator - Select pages</h1>
+	<main class="container pb-6">
+	
+		<section class="content py-4">
+			<h1 class="title">PDFCombinator - Select pages</h1>
+		</section>
 		
-		<form action="/PDFCombinator/select" method="post">
+		<section class="container">
+		
+			<form class="box" action="/PDFCombinator/select" method="post">
 			<% 
 			List<PDDocument> pdfs = (ArrayList)request.getAttribute("pdfs");
 			// Iterator<PDDocument> iterator = pdfs.iterator();
@@ -44,39 +55,61 @@
 			
 			for (int i = 1; i <= (pdfs.size() * 2); i++) {
 			%>
-			<label for="select-file-<%=i%>">File:</label>
-			<select name="select-file-<%=i%>" id="select-file-<%=i%>">
-			<option value="" selected="selected"> </option>
-			<%
-				for (PDDocument pdfDoc : pdfs) {
-					String id = pdfDoc.getDocumentId().toString();
-					String title = pdfDoc.getDocumentInformation().getTitle();
-			%>
-					<option value="<%= id %>"> <%= title %></option>
-			<%
-				}
-			 %>
-			</select>
-			<label for="select-page-<%=i%>">Pages to select: </label>
-			<input type="text" name="select-page-<%=i%>" id="select-page-<%=i%>" />
-			<br>
-			
-			<% } %>
-			
-			
-			<label for="file-name">Enter a name for the new PDF:</label>
-			<input type="text" id="file-name" name="file-name"/>
-			
+				<div class="field">
+					<label class="label" for="select-file-<%=i%>">File:</label>
+					<div class="control">
+						<div class="select">
+							<select name="select-file-<%=i%>" id="select-file-<%=i%>">
+								<option value="" selected="selected"> </option>
+								<%
+									for (PDDocument pdfDoc : pdfs) {
+										String id = pdfDoc.getDocumentId().toString();
+										String title = pdfDoc.getDocumentInformation().getTitle();
+								%>
+										<option value="<%= id %>"> <%= title %></option>
+								<%
+									}
+								 %>
+							</select>			
+						</div>
+					</div>
+				</div>
+				
+				<div class="field">
+					<label class="label" for="select-page-<%=i%>">Pages to select: </label>
+					<div class="control">
+						<input class="input" type="text" name="select-page-<%=i%>" id="select-page-<%=i%>" />
+					</div>
+				</div>
+				
+				<% } %>
+				
+				<div class="field">
+					<label class="label" for="file-name">Enter a name for the new PDF:</label>
+					<div class="control">
+						<input class="input" type="text" id="file-name" name="file-name"/>
+					</div>
+				</div>
+
 			<% request.setAttribute("pdfs", pdfs); %>
 			
-			<button>Create PDF</button>
+			<button class="button">Create PDF</button>
 		
 		</form>
 		
+		
+		</section>		
 	
 	</main>
 
-
+	<footer class="footer">
+	  <div class="content has-text-centered">
+	    <p>
+	      <strong>PDFCombinator</strong> by <a href="https://github.com/v3g4n/">Miet Vanderheyden</a>, <a href="https://github.com/emchyeah">Meigan Cheah</a>, 
+	      and <a href="https://github.com/Serapik">Serap Keskinler</a>. 2022
+	    </p>
+	  </div>
+	</footer>
 
 </body>
 

@@ -3,7 +3,9 @@
 
 <head>
 	<meta charset="ISO-8859-1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>PDFCombinator | Upload</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 	<link rel="stylesheet" href="css/styles.css">
 </head>
 
@@ -11,51 +13,126 @@
 
 <!--  Nav Bar  -->
 
-	<nav>
-		<ul>
-			<li><a href="/PDFCombinator/home">Home</a></li>
-			<li><a href="/PDFCombinator/about">About</a></li>
-			<li><a href="/PDFCombinator/upload">Upload</a></li>
-			<li><a href="/PDFCombinator/account">Account</a></li>
-			<li><a href="/PDFCombinator/logout">Log Out</a></li>
-		</ul>
+	<nav class="navbar p-4" role="navigation" aria-label="main navigation">
+		<div id="navbarBasicExample" class="navbar-menu">
+	    	<div class="navbar-start">
+		    	<a class="navbar-item" href="/PDFCombinator/home">Home</a>
+				<a class="navbar-item" href="/PDFCombinator/about">About</a>
+			</div>
+			
+			<div class="navbar-end">
+				<a class="navbar-item" href="/PDFCombinator/upload">Upload</a>
+				<a class="navbar-item" href="/PDFCombinator/account">Account</a>
+				<a class="navbar-item" href="/PDFCombinator/logout">Log Out</a>
+			</div>
+	    </div>
 		
 	</nav>
 	
 <!--  Main part of website -->
 
-	<main>
-		<h1>Upload PDFs</h1>
+	<main class="container pb-6">
+	
+	<section class="content py-4">
+		<h1 class="title">Upload PDFs</h1>
+	</section>
 		
-		<form action="/PDFCombinator/upload" method="post" enctype="multipart/form-data">
+	<section class="container">
+	
+		<form class="box" action="/PDFCombinator/upload" method="post" enctype="multipart/form-data">
+		
 			<fieldset>
-				<label for="file1">Upload the first source PDF file: </label>
-				<input type="file" name="file1" accept=".pdf"/>
-				<label for="file1name">Optional: enter a name for this file</label>
-				<input type="text" name="file1name"/>
+				<div class="file">
+				  <label class="file-label">
+				    <input class="file-input" type="file" name="file1" accept=".pdf">
+				    <span class="file-cta">
+				      <span class="file-icon">
+				        <i class="fas fa-upload"></i>
+				      </span>
+				      <span class="file-label">
+				        Choose a file…
+				      </span>
+				    </span>
+				  </label>
+				</div>
+						
+				<div class="field">
+					<label class="label" for="file1name">Optional: enter a name for this file</label>
+					<div class="control">
+						<input class="input" type="text" name="file1name"/>
+					</div>
+				</div>
+	
+			</fieldset>
+
+			<br>
+			<fieldset>
+				<div class="file">
+				  <label class="file-label">
+				    <input class="file-input" type="file" name="file2" accept=".pdf">
+				    <span class="file-cta">
+				      <span class="file-icon">
+				        <i class="fas fa-upload"></i>
+				      </span>
+				      <span class="file-label">
+				        Choose a file…
+				      </span>
+				    </span>
+				  </label>
+				</div>
+
+			
+				<div class="field">
+					<label class="label" for="file2name">Optional: enter a name for this file</label>
+					<div class="control">
+						<input class="input" type="text" name="file2name"/>
+					</div>
+				</div>
+	
 			</fieldset>
 			<br>
 			<fieldset>
-				<label for="file2">Upload the second source PDF file: </label>
-				<input type="file" name="file2" accept=".pdf"/>			
-				<label for="file2name">Optional: enter a name for this file</label>
-				<input type="text" name="file2name"/>			
-			</fieldset>
-			<br>			
-			<fieldset>
-				<label for="file3">Upload the third source PDF file: </label>
-				<input type="file" name="file3" accept=".pdf"/>			
-				<label for="file3name">Optional: enter a name for this file</label>
-				<input type="text" name="file3name"/>			
+				<div class="file">
+				  <label class="file-label">
+				    <input class="file-input" type="file" name="file3" accept=".pdf">
+				    <span class="file-cta">
+				      <span class="file-icon">
+				        <i class="fas fa-upload"></i>
+				      </span>
+				      <span class="file-label">
+				        Choose a file…
+				      </span>
+				    </span>
+				  </label>
+				</div>
+			
+				<div class="field">
+					<label class="label" for="file3name">Optional: enter a name for this file</label>
+					<div class="control">
+						<input class="input" type="text" name="file3name"/>
+					</div>
+				</div>
+	
 			</fieldset>
 						
-			<button type="submit">Upload</button>
+			<button class="button" type="submit">Upload</button>
 		
 		</form>
 	
+
+	</section>
+		
+		
 	</main>
 
-
+	<footer class="footer">
+	  <div class="content has-text-centered">
+	    <p>
+	      <strong>PDFCombinator</strong> by <a href="https://github.com/v3g4n/">Miet Vanderheyden</a>, <a href="https://github.com/emchyeah">Meigan Cheah</a>, 
+	      and <a href="https://github.com/Serapik">Serap Keskinler</a>. 2022
+	    </p>
+	  </div>
+	</footer>
 
 </body>
 

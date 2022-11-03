@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/home")
+@WebServlet(urlPatterns = {"/home", "/"})
 public class HomeServlet extends HttpServlet {
 
 	/**
@@ -20,7 +20,7 @@ public class HomeServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		request.getRequestDispatcher("/html/index.html").forward(request, response);
+		request.getRequestDispatcher("/html/index.jsp").forward(request, response);
 	}
 	
 	

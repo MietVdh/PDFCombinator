@@ -1,10 +1,12 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 
 <head>
 	<meta charset="ISO-8859-1">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>PDFCombinator | Registration Confirmed</title>
+	<title>PDFCombinator | Email Verified</title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 	<link rel="stylesheet" href="css/styles.css">
 </head>
@@ -28,8 +30,6 @@
 		
 	</nav>
 	
-	
-	
 <!--  Main part of website -->
 
 	<main class="container pb-6">
@@ -39,11 +39,12 @@
 		</section>
 		
 		<section class="content">
-			<p>Your information has been received. Please check your email inbox and click the verification link to complete the registration process.</p>
+			<p>Your email has been verified. You can now <a href="/PDFCombinator/login">log in</a>.</p>
+		
 		</section>
 	
 	</main>
-	
+
 	<footer class="footer">
 	  <div class="content has-text-centered">
 	    <p>

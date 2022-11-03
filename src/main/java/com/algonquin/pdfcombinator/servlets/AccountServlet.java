@@ -1,6 +1,9 @@
 package com.algonquin.pdfcombinator.servlets;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -70,6 +73,7 @@ public class AccountServlet extends HttpServlet {
 				session.setAttribute("username", newUsername);
 				username = newUsername;
 				System.out.println("Username updated to " + session.getAttribute("username"));
+				message += "Successfully updated username \n";
 
 			} else {
 				System.out.println("That username is not available");
@@ -96,7 +100,28 @@ public class AccountServlet extends HttpServlet {
 		
 		if (!newEmail.equals(email) && !newEmail.equals("") && newEmail != null) {
 			if (dao.updateEmail(username, newEmail)) {
-				System.out.println("Email updated");
+				System.out.println("Email updated. Please click confirmation link to complete");
+				
+				String code = UUID.randomUUID().toString();
+				
+				// update code in database
+				dao.updateCode(username, code);
+				
+				String id = user.getID().toString();
+				
+				String link = "";
+				
+				try {
+					URI verificationLink = new URI("http://localhost:8080/PDFCombinator/verify?id=" + id + "&code=" + code);
+					link = verificationLink.toString();
+				} catch (URISyntaxException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				System.out.println("Please paste this link in your browser to complete registration: \n" + link);
+				message += "Please click the verification link we sent to you in order to complete updating your email address to " + newEmail + "\n";
+				
 			} else {
 				message += "Could not update email\n";
 				System.out.println(message);

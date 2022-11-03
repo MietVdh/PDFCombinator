@@ -8,24 +8,40 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/about")
-public class AboutServlet extends HttpServlet {
+import com.algonquin.pdfcombinator.dao.ApplicationDao;
+
+@WebServlet("/verify")
+public class VerifyEmailServlet extends HttpServlet {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/html/about.jsp").forward(request, response);
+		
+		String id = request.getParameter("id");
+		String code = request.getParameter("code");
+		
+		ApplicationDao dao = new ApplicationDao();
+		
+		System.out.println("ID: " + id + " \n Code: " + code);
+		if (dao.verifyEmail(id, code)) {
+			System.out.println("Email verified");
+			dao.updateVerifiedEmail(id, code);
+		} else {
+			System.out.println("We were not able to verify that email address");
+		}
+		
+		request.getRequestDispatcher("/html/verify.jsp").forward(request, response);
 	}
 	
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+
 		doGet(request, response);
 	}
 	
 
+	
 }
