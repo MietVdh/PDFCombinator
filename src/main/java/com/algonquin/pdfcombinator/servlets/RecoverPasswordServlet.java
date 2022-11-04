@@ -33,19 +33,51 @@ public class RecoverPasswordServlet extends HttpServlet {
 		System.out.println("ID: " + id + " \n Code: " + code);
 		if (dao.verifyCode(id, code)) {
 			System.out.println("Code verified");
-			User user = dao.getUserById(id);
-			request.setAttribute("username", user.getUserName());
+			
 		} else {
 			System.out.println("We were not able to verify that code. Please try again");
+			request.getRequestDispatcher("/").forward(request, response);
+			return;
 		}
 		
-		
-		request.getRequestDispatcher("/html/passwordreset.html").forward(request, response);
+		String username = dao.getUserById(id).getUserName();		
+		request.setAttribute("username", username);
+		System.out.println("username in RecoverPassword doGet: " + username);
+		request.getRequestDispatcher("/html/updatepassword.jsp").forward(request, response);
 	}
 	
 	
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// Message
+		String message = "";
+		
+		// get passwords from form
+		String password1 = request.getParameter("new-password-1");
+		String password2 = request.getParameter("new-password-2");
+		
+		// get username
+		String username = request.getParameter("username");
+		System.out.println("Username in recoverPassword doPost: " + username);
+		
+		// Check that both passwords match
+		if (!password1.equals(password2)) {
+			message = "The passwords you entered don't match. Please try again.";
+			request.setAttribute("message", message);
+			request.getRequestDispatcher("/html/updatepassword.jsp").forward(request, response);
+			return;
+		} else {
+			ApplicationDao dao = new ApplicationDao();
+			if (dao.updatePassword(username, password1)) {
+				message = "Your password has been updated";
+				request.setAttribute("message", message);
+				request.getRequestDispatcher("/").forward(request, response);
+			} else {
+				message = "Sorry, something went wrong. Please try again.";
+				request.setAttribute("message", message);
+				request.getRequestDispatcher("/html/updatepassword.jsp").forward(request, response);
+			}
+		}
 		
 	}
 

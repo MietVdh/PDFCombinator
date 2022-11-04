@@ -104,12 +104,13 @@ public class RegisterServlet extends HttpServlet {
 			try {
 				URI verificationLink = new URI("http://localhost:8080/PDFCombinator/verify?id=" + id + "&code=" + code);
 				link = verificationLink.toString();
+				infoMessage = "Your information has been received. Please check your email inbox and click the verification link to complete the registration process.";
 			} catch (URISyntaxException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
-			
+			req.setAttribute("message", infoMessage);
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/confirm");
 			dispatcher.forward(req, resp);
 			System.out.println("Please paste this link in your browser to complete registration: \n" + link);

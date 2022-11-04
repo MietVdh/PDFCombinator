@@ -18,7 +18,7 @@ public class ConfirmationServlet extends HttpServlet {
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		getServletContext().getRequestDispatcher("/html/confirm.html").forward(request, response);
+		getServletContext().getRequestDispatcher("/html/confirm.jsp").forward(request, response);
 	}
 	
 	

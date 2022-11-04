@@ -25,7 +25,8 @@ public class ResetPasswordServlet extends HttpServlet {
 	
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/html/passwordreset.html").forward(request, response);
+		System.out.println("In ResetPasswordServlet doGet");
+		request.getRequestDispatcher("/html/passwordreset.jsp").forward(request, response);
 	}
 	
 	
@@ -34,7 +35,9 @@ public class ResetPasswordServlet extends HttpServlet {
 		
 		String message = "";
 		// Get email
-		String email = request.getParameter("email-recovery");
+		String email = request.getParameter("email");
+		
+		System.out.println("Email: " + email);
 		
 		// Generate random code
 		String code = UUID.randomUUID().toString();
@@ -43,7 +46,12 @@ public class ResetPasswordServlet extends HttpServlet {
 		
 		User user = dao.getUserByEmail(email);
 		
-		if (!dao.addCode(code, email)) {
+		if (user == null) {
+			message = "That email address is not associated with an account";
+			request.setAttribute("message", message);
+			request.getRequestDispatcher("/").forward(request, response);
+			return;
+		} else if (!dao.addCode(code, email)) {
 			message = "Sorry, something went wrong. Please try again.";
 			request.setAttribute("message", message);
 			request.getRequestDispatcher("/").forward(request, response);
@@ -51,17 +59,23 @@ public class ResetPasswordServlet extends HttpServlet {
 		}
 		
 		String id = user.getID().toString();
+		String username = user.getUserName();
+		System.out.println("Username in ResetPassword: " + username);
 		
 		String link = "";
 		
 		try {
 			URI verificationLink = new URI("http://localhost:8080/PDFCombinator/recover?id=" + id + "&code=" + code);
 			link = verificationLink.toString();
+			message = "Please check your email for the link to reset your password";
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			message = "Sorry, something went wrong. Please try again.";
 		}
 		
+		request.setAttribute("message", message);
+		request.setAttribute("username", username);
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/confirm");
 		dispatcher.forward(request, response);
 		System.out.println("Please paste this link in your browser to reset your password: \n" + link);

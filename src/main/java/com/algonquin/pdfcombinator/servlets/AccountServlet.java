@@ -89,7 +89,10 @@ public class AccountServlet extends HttpServlet {
 		}
 		
 		if (!newEmail.equals(email) && !newEmail.equals("") && newEmail != null) {
-			if (dao.updateEmail(username, newEmail)) {
+			
+			if (dao.getUserByEmail(newEmail) != null) {
+				message += "That email address is already associated with an account\n";
+			} else if (dao.updateEmail(username, newEmail)) {
 				System.out.println("Email updated. Please click confirmation link to complete");
 				
 				String code = UUID.randomUUID().toString();
@@ -109,7 +112,7 @@ public class AccountServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 				
-				System.out.println("Please paste this link in your browser to complete registration: \n" + link);
+				System.out.println("Please paste this link in your browser to update your email address: \n" + link);
 				message += "Please click the verification link we sent to you in order to complete updating your email address to " + newEmail + "\n";
 				
 			} else {
