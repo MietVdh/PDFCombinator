@@ -50,8 +50,7 @@ public class ApplicationDao {
 		
 		return rowsAffected;
 	}
-	
-	
+		
 	public boolean verifyCode(String id, String code) {
 		boolean verified = false;
 		
@@ -79,9 +78,7 @@ public class ApplicationDao {
 		
 		return verified;
 	}
-	
-	
-	
+		
 	public boolean isUsernameAvailable(String username) {
 		boolean available = false;
 		
@@ -149,7 +146,7 @@ public class ApplicationDao {
 		return user;
 	}
 	
-public User getUserByEmail(String email) {
+	public User getUserByEmail(String email) {
 		
 		User user = new User();
 		
@@ -157,16 +154,61 @@ public User getUserByEmail(String email) {
 		Connection connection = DBConnection.connectToDB();
 		
 		// Query DB
-		String query = "SELECT * FROM users WHERE email = ?";
+		String query = "SELECT * FROM users WHERE email = ? ";
 		
 		try {
 			PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			statement.setString(1, email);
+			System.out.println("DB query: " + statement.toString());
+			
+			// retrieve result
+			ResultSet result = statement.executeQuery();
+			if (result.next()) {
+				String id = result.getString(COL_ID);
+				String username = result.getString(COL_USERNAME);
+				String password = result.getString(COL_PASSWORD);
+				String firstName = result.getString(COL_FIRST_NAME);
+				String lastName = result.getString(COL_LAST_NAME);
+				
+				// Load result into user bean
+				user.setId(id);
+				user.setUserName(username);
+				user.setEmail(email);
+				user.setFirstName(firstName);
+				user.setLastName(lastName);
+				user.setPassword(password);
+			} else {
+				return null;
+			}
+			
+			
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+
+		// Return user object
+		return user;
+	}
+	
+	public User getUserById(String id) {
+	
+		User user = new User();
+		
+		// connect to DB
+		Connection connection = DBConnection.connectToDB();
+		
+		// Query DB
+		String query = "SELECT * FROM users WHERE uuid = ?";
+		
+		try {
+			PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			statement.setString(1, id);
 			
 			// retrieve result
 			ResultSet result = statement.executeQuery();
 			result.first();
-			String id = result.getString(COL_ID);
+			String email = result.getString(COL_EMAIL);
 			String username = result.getString(COL_USERNAME);
 			String password = result.getString(COL_PASSWORD);
 			String firstName = result.getString(COL_FIRST_NAME);
@@ -184,51 +226,10 @@ public User getUserByEmail(String email) {
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}
-
+	
 		// Return user object
 		return user;
 	}
-	
-public User getUserById(String id) {
-	
-	User user = new User();
-	
-	// connect to DB
-	Connection connection = DBConnection.connectToDB();
-	
-	// Query DB
-	String query = "SELECT * FROM users WHERE uuid = ?";
-	
-	try {
-		PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-		statement.setString(1, id);
-		
-		// retrieve result
-		ResultSet result = statement.executeQuery();
-		result.first();
-		String email = result.getString(COL_EMAIL);
-		String username = result.getString(COL_USERNAME);
-		String password = result.getString(COL_PASSWORD);
-		String firstName = result.getString(COL_FIRST_NAME);
-		String lastName = result.getString(COL_LAST_NAME);
-		
-		// Load result into user bean
-		user.setId(id);
-		user.setUserName(username);
-		user.setEmail(email);
-		user.setFirstName(firstName);
-		user.setLastName(lastName);
-		user.setPassword(password);
-		
-		
-	} catch(SQLException e) {
-		e.printStackTrace();
-	}
-
-	// Return user object
-	return user;
-}
-
 
 	public boolean activateAccount(String id) {
 		boolean activated = false;
@@ -315,7 +316,6 @@ public User getUserById(String id) {
 		return validated;
 	}
 	
-
 	public boolean updateUsername(String oldUsername, String newUsername) {
 		boolean success = false;
 		if (isUsernameAvailable(newUsername)) {
@@ -507,6 +507,7 @@ public User getUserById(String id) {
 			int rowsAffected = statement.executeUpdate();
 			if (rowsAffected == 1) {
 				success = true;
+				System.out.println("Password updated in DB");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -515,8 +516,7 @@ public User getUserById(String id) {
 		return success;
 		
 	}
-	
-	
+		
 	public boolean deleteUser(String username) {
 		boolean success = false;
 		
