@@ -21,9 +21,21 @@
 			<a class="navbar-item" href="/PDFCombinator/about">About</a>
 		</div>
 		<div id="navbarBasicExample" class="navbar-menu is-active">
-	    	<div class="navbar-end">
-	      		<a class="navbar-item" href="/PDFCombinator/register">Register</a>
-	      		<a class="navbar-item" href="/PDFCombinator/login">Log In</a>
+			
+			<div class="navbar-end">
+			<% if (session.getAttribute("username") == null) {
+				out.println(
+						"<a class=\"navbar-item\" href=\"/PDFCombinator/register\">Register</a> "
+						+ "<a class=\"navbar-item\" href=\"/PDFCombinator/login\">Log In</a>");
+				
+			} else {
+				out.println(
+						"<a class=\"navbar-item\" href=\"/PDFCombinator/upload\">Upload</a> " 
+						+ "<a class=\"navbar-item\" href=\"/PDFCombinator/account\">Account</a>"
+						+ "<a class=\"navbar-item\" href=\"/PDFCombinator/logout\">Log Out</a>");
+			}
+			%>
+	
 	      	</div>
 	    </div>
 		
@@ -37,8 +49,18 @@
 			<h1 class="title">Welcome to PDFCombinator!</h1>
 		</section>
 		
+		<% 
+		String message = "";
+		if (session.getAttribute("username") == null) {
+			message = "Your email has been verified. You can now <a href=\"/PDFCombinator/login\">log in</a>.";
+		} else {
+			message = "Your email has been updated.";
+		}
+		
+		%>
+		
 		<section class="content">
-			<p>Your email has been verified. You can now <a href="/PDFCombinator/login">log in</a>.</p>
+			<p><%= message %></p>
 		
 		</section>
 	

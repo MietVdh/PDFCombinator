@@ -25,7 +25,6 @@ public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	
-	// Miet's code
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		// Check if user is already logged in
@@ -36,7 +35,6 @@ public class RegisterServlet extends HttpServlet {
 		} else {
 			request.getRequestDispatcher("/html/account.jsp").forward(request, response);
 		}
-		
 		
 	}
 	
@@ -117,22 +115,7 @@ public class RegisterServlet extends HttpServlet {
 		}
 		
 		System.out.println(infoMessage);
-
-//		write the message back to the page in client browser\
-//		String page = getHTMLString(req.getServletContext().getRealPath("/html/register.jsp"), infoMessage);
-//		resp.getWriter().write(page);
-//		
-		
-				
 				
 	}
 
-//	private String getHTMLString(String realPath, String infoMessage) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//	
-//	
-//	
-	
 }

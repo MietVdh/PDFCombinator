@@ -69,7 +69,6 @@ public class ResetPasswordServlet extends HttpServlet {
 			link = verificationLink.toString();
 			message = "Please check your email for the link to reset your password";
 		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			message = "Sorry, something went wrong. Please try again.";
 		}
@@ -79,8 +78,6 @@ public class ResetPasswordServlet extends HttpServlet {
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/confirm");
 		dispatcher.forward(request, response);
 		System.out.println("Please paste this link in your browser to reset your password: \n" + link);
-		
-		
 		
 		
 	}

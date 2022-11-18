@@ -41,10 +41,8 @@ public class UploadPdfServlet extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-//	private static File uploadsFolder = new File("uploads");
 	private String message;
-	
-//	private List<File> uploadedFiles = new ArrayList<>();
+
 	private List<PDDocument> uploadedPdfs = new ArrayList<>();
 	
 	
@@ -76,7 +74,6 @@ public class UploadPdfServlet extends HttpServlet {
 		uploadFile("file3name", "file3", request);
 		System.out.println("DoPost - After uploading file3, pdfs contains " + uploadedPdfs.size() + " docs");
 		
-//		request.setAttribute("files", uploadedFiles);
 		request.setAttribute("pdfs", uploadedPdfs);
 		
 		HttpSession session = request.getSession();
@@ -86,9 +83,6 @@ public class UploadPdfServlet extends HttpServlet {
 		
 		dispatcher.forward(request, response);
 	
-		
-//		String page = getHTMLString(request.getServletContext().getRealPath("/html/select.html"));
-//		response.getWriter().write(page);
 	}
 	
 	
@@ -102,30 +96,13 @@ public class UploadPdfServlet extends HttpServlet {
     	
     	reader.close();
     	String page = buffer.toString();
-    	
-//    	page = MessageFormat.format(page);
+  
     	
     	return page;
     }
 	
 	private void uploadFile(String filename, String filepart, HttpServletRequest request) throws IOException, ServletException {
 		
-		/* Possibly unnecessary?
-	
-
-		// Path where files will be stored
-		Path path = Files.createDirectories(Paths.get("C:/tmp/pdfcombinator/uploads"));
-		
-//		String path = System.getProperty("user.home") + File.separator + "/temp/uploads"; 
-		// Source: https://stackoverflow.com/questions/21059085/how-can-i-create-a-file-in-the-current-users-home-directory-using-java/21059316#21059316
-		
-		// Create folder if it doesn't already exist
-		Files.createDirectories(path);
-		File uploadsFolder = new File(path.toString());
-		
-		*/
-				
-	    
 		// Get file submitted by user
 	    Part filePart = request.getPart(filepart); 
 	    
@@ -146,9 +123,7 @@ public class UploadPdfServlet extends HttpServlet {
 	 				
 	    
 	    InputStream fileContent = filePart.getInputStream();
-	    
-	    
-	    
+	    	    
 	    // If user submitted filename, rename file
 	    if (submittedFileName == null || submittedFileName.equals("")) {
 	    	fileName = filePart.getSubmittedFileName();
@@ -167,26 +142,7 @@ public class UploadPdfServlet extends HttpServlet {
 	    
 	    System.out.println("Uploadfile - List of uploaded PDFs now contains " + uploadedPdfs.size() + " documents");
 	    
-	    
-	    
-	    
-	    /* Possibly unnecessary?
-	    File file = new File(uploadsFolder, fileName);
-	    try {
-	    	if (!file.exists()) {
-	    		Files.createFile(file.toPath());
-	    	}   	
-		    Files.copy(fileContent, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
-	    } catch (Exception e) {
-	    	e.printStackTrace();
-	    }
-	    
-	    
-	    System.out.println("File uploaded: " + fileName);
-	    
-	    uploadedFiles.add(file);
 
-		*/
 	}
 
 }

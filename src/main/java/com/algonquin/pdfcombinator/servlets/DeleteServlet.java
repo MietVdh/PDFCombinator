@@ -57,10 +57,6 @@ public class DeleteServlet extends HttpServlet {
 		}
 		
 		
-		
-		// Forward user to webpage confirming account deletion
-		
-		
 		doGet(request, response);
 	}
 
