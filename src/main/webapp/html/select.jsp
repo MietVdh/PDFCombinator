@@ -40,21 +40,22 @@
 	<main class="container pb-6">
 	
 		<section class="content py-4">
-			<h1 class="title">PDFCombinator - Select pages</h1>
+			<h1 class="title is-1">PDFCombinator - Select pages</h1>
 		</section>
 		
 		<section class="container">
 		
 			<form class="box" action="/PDFCombinator/select" method="post">
 			<% 
-			List<PDDocument> pdfs = (ArrayList)request.getAttribute("pdfs");
+			List<PDDocument> pdfs = (ArrayList)session.getAttribute("pdfs");
 			// Iterator<PDDocument> iterator = pdfs.iterator();
 
 			// while (iterator.hasNext()) {
 			// 	PDDocument pdf = iterator.next();
 			
-			for (int i = 1; i <= (pdfs.size() * 2); i++) {
+			for (int i = 1; i <= (pdfs.size() * 2) && i < 7; i++) {
 			%>
+			<fieldset class="box">
 				<div class="field">
 					<label class="label" for="select-file-<%=i%>">File:</label>
 					<div class="control">
@@ -78,18 +79,22 @@
 				<div class="field">
 					<label class="label" for="select-page-<%=i%>">Pages to select: </label>
 					<div class="control">
-						<input class="input" type="text" name="select-page-<%=i%>" id="select-page-<%=i%>" />
+						<input class="input" type="text" name="select-page-<%=i%>" id="select-page-<%=i%>" placeholder="e.g. 1-4, 5, 7-9" />
 					</div>
 				</div>
+				
+				</fieldset>
 				
 				<% } %>
 				
 				<div class="field">
 					<label class="label" for="file-name">Enter a name for the new PDF:</label>
 					<div class="control">
-						<input class="input" type="text" id="file-name" name="file-name"/>
+						<input class="input" type="text" id="file-name" name="file-name" placeholder="e.g. result"/>
 					</div>
 				</div>
+				
+				
 
 			<% request.setAttribute("pdfs", pdfs); %>
 			

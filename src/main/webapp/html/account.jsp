@@ -37,7 +37,7 @@
 	<main class="container pb-6">
 	
 		<section class="content py-4">
-			<h1 class="title" >PDFCombinator - Account</h1>
+			<h1 class="title is-1" >PDFCombinator - Account</h1>
 		</section>
 		
 		

@@ -130,30 +130,30 @@ public class PDFUtilities {
 	
 	
 	// Returns a list of pdf pages specified, in the correct order	
-		public ArrayList<PDPage> extractPdfPages(PDDocument pdf, String pageNumbers) {
+	public ArrayList<PDPage> extractPdfPages(PDDocument pdf, String pageNumbers) {
+		
+		// Initialize variables
+		ArrayList<PDPage> pdfPages = null;
+		int[] pageNums;
 			
-			// Initialize variables
-			ArrayList<PDPage> pdfPages = null;
-			int[] pageNums;
-				
-			// Get correct page numbers
-			pageNums = extractPageNums(pageNumbers);
-			
-			// Add all requested PDF pages to ArrayList
-			for (int pageNum : pageNums ) {
-				// Make sure page number is valid
-				if (pageNum <= pdf.getNumberOfPages()) {
-					// Adjust page number to zero-based
-					PDPage page = pdf.getPage(pageNum-1);
-					try {
-						pdfPages.add(page);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}	
-			}
-			return pdfPages;
+		// Get correct page numbers
+		pageNums = extractPageNums(pageNumbers);
+		
+		// Add all requested PDF pages to ArrayList
+		for (int pageNum : pageNums ) {
+			// Make sure page number is valid
+			if (pageNum <= pdf.getNumberOfPages()) {
+				// Adjust page number to zero-based
+				PDPage page = pdf.getPage(pageNum-1);
+				try {
+					pdfPages.add(page);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}	
 		}
+		return pdfPages;
+	}
 		
 	
 	// Create combined PDF document from separate PDF pages

@@ -257,36 +257,7 @@ public class ApplicationDao {
 		
 	}
 	
-	public boolean isActiveUser(String id) {
-boolean isActive = false;
-		
-		try {
-			//connect to DB
-			Connection connection = DBConnection.connectToDB();
-			
-			//write insert query to DB
-			String query = "SELECT * FROM users WHERE uuid = ?";
-			
-			
-			//set parameters with PreparedStatement
-			PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			statement.setString(1, id);
-					
-			//execute statement
-			ResultSet result = statement.executeQuery();
-			result.first();
-			if (result.getInt(COL_ACTIVE) == 1) {
-				isActive = true;
-			}
-			
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return isActive;
-	}
-	
-//	public boolean isActiveUser(String username) {
+//	public boolean isActiveUser(String id) {
 //		boolean isActive = false;
 //		
 //		try {
@@ -294,12 +265,12 @@ boolean isActive = false;
 //			Connection connection = DBConnection.connectToDB();
 //			
 //			//write insert query to DB
-//			String query = "SELECT * FROM users WHERE username = ?";
+//			String query = "SELECT * FROM users WHERE uuid = ?";
 //			
 //			
 //			//set parameters with PreparedStatement
 //			PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-//			statement.setString(1, username);
+//			statement.setString(1, id);
 //					
 //			//execute statement
 //			ResultSet result = statement.executeQuery();
@@ -313,8 +284,37 @@ boolean isActive = false;
 //		}
 //		
 //		return isActive;
-//		
 //	}
+	
+	public boolean isActiveUser(String username) {
+		boolean isActive = false;
+		
+		try {
+			//connect to DB
+			Connection connection = DBConnection.connectToDB();
+			
+			//write insert query to DB
+			String query = "SELECT * FROM users WHERE username = ?";
+			
+			
+			//set parameters with PreparedStatement
+			PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			statement.setString(1, username);
+					
+			//execute statement
+			ResultSet result = statement.executeQuery();
+			result.first();
+			if (result.getInt(COL_ACTIVE) == 1) {
+				isActive = true;
+			}
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return isActive;
+		
+	}
 	
 	public boolean validateUser(String username, String password) {
 		boolean validated = false;

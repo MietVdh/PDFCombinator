@@ -40,9 +40,8 @@ public class SelectServlet extends HttpServlet {
 		System.out.println("In SelectServlet doGet()");
 		// Get "files" attribute from forwarded request
 		session = request.getSession();
-		System.out.println("request.getAttribute(pdfs): " + session.getAttribute("pdfs").toString());
 
-		uploadedPdfs = (List<PDDocument>)session.getAttribute("pdfs");
+		uploadedPdfs = new ArrayList<PDDocument>((List<PDDocument>)session.getAttribute("pdfs"));
 		
 		
 		request.getRequestDispatcher("/html/select.jsp").forward(request, response);
@@ -60,8 +59,7 @@ public class SelectServlet extends HttpServlet {
 		
 		session = request.getSession();
 		
-		uploadedPdfs = (List<PDDocument>)session.getAttribute("pdfs");
-		System.out.println("session.getAttribute(pdfs): " + session.getAttribute("pdfs").toString());
+		uploadedPdfs = new ArrayList<PDDocument>((List<PDDocument>)session.getAttribute("pdfs"));
 		
 		System.out.println("Size of list of PDFs: " + uploadedPdfs.size());
 		
@@ -74,8 +72,8 @@ public class SelectServlet extends HttpServlet {
 			newFileName = "result";
 		}
 		
-		
-		for (int i=1; i<=uploadedPdfs.size()*2; i++) {
+		// Access form input and add selected pages to ArrayList 
+		for (int i=1; i<=uploadedPdfs.size()*2 && i < 7; i++) {
 			String fileSelect = "select-file-" + i;
 			String pageSelect = "select-page-" + i;
 			if (request.getParameter(fileSelect) != null && !request.getParameter(fileSelect).equals("")) {

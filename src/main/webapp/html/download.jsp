@@ -35,7 +35,7 @@
 
 	<main class="container pb-6">
 		<section class="content py-4">
-			<h1 class="title">Download your file</h1>
+			<h1 class="title is-1">Download your file</h1>
 		</section>
 		
 		<section class="content">
@@ -43,6 +43,13 @@
 			<% System.out.println(session.getAttribute("resultFile")); %>
 			<a href="<%= session.getAttribute("resultFile") %>" download>Download PDF</a>
 
+		</section>
+		
+		<section class="content">
+			<ul>
+				<li><a href="/PDFCombinator/upload">Upload more files</a></li>
+				<li><a href="/PDFCombinator/select">Combine uploaded files again</a></li>
+			</ul>			
 		</section>
 	
 	</main>

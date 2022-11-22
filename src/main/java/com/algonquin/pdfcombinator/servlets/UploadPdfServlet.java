@@ -1,8 +1,6 @@
 package com.algonquin.pdfcombinator.servlets;
 
-import java.io.BufferedReader;
 //import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 //import java.nio.file.Files;
@@ -49,8 +47,7 @@ public class UploadPdfServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		System.out.println("In UploadServlet doGet()");
-		String page = getHTMLString(request.getServletContext().getRealPath("/html/upload.html"));
-		response.getWriter().write(page);
+		request.getRequestDispatcher("/html/upload.jsp").forward(request, response);
 	}
 	
 	
@@ -69,10 +66,16 @@ public class UploadPdfServlet extends HttpServlet {
 		// Upload files and add them to list of uploaded files
 		uploadFile("file1name", "file1", request);
 		System.out.println("DoPost - After uploading file1, pdfs contains " + uploadedPdfs.size() + " docs");
+		
+		
 		uploadFile("file2name", "file2", request);
 		System.out.println("DoPost - After uploading file2, pdfs contains " + uploadedPdfs.size() + " docs");
+
+		
 		uploadFile("file3name", "file3", request);
 		System.out.println("DoPost - After uploading file3, pdfs contains " + uploadedPdfs.size() + " docs");
+
+		
 		
 		request.setAttribute("pdfs", uploadedPdfs);
 		
@@ -84,24 +87,11 @@ public class UploadPdfServlet extends HttpServlet {
 		dispatcher.forward(request, response);
 	
 	}
-	
-	
-	public String getHTMLString(String filePath) throws IOException {
-    	BufferedReader reader = new BufferedReader(new FileReader(filePath));
-    	String line = "";
-    	StringBuffer buffer = new StringBuffer();
-    	while ((line=reader.readLine())!= null) {
-    		buffer.append(line);
-    	}
-    	
-    	reader.close();
-    	String page = buffer.toString();
-  
-    	
-    	return page;
-    }
+
 	
 	private void uploadFile(String filename, String filepart, HttpServletRequest request) throws IOException, ServletException {
+		
+		System.out.println("*********In uploadFile");
 		
 		// Get file submitted by user
 	    Part filePart = request.getPart(filepart); 
@@ -118,11 +108,8 @@ public class UploadPdfServlet extends HttpServlet {
 	    }
 	    
 	    // Get user-submitted filename, if any
-	 		String submittedFileName = request.getParameter(filename); 
-	 		String fileName;
-	 				
-	    
-	    InputStream fileContent = filePart.getInputStream();
+ 		String submittedFileName = request.getParameter(filename); 
+ 		String fileName;
 	    	    
 	    // If user submitted filename, rename file
 	    if (submittedFileName == null || submittedFileName.equals("")) {
@@ -130,18 +117,25 @@ public class UploadPdfServlet extends HttpServlet {
 	    } else {
 	    	fileName = submittedFileName + ".pdf";
 	    }
-	    
+	        
+	    // Load PDF
+	    InputStream fileContent = filePart.getInputStream();
 	    
 	    PDDocument uploadedPdf = Loader.loadPDF(fileContent);
+	    
 	    PDDocumentInformation info = new PDDocumentInformation();
 		info.setTitle(fileName);
+		
 	    uploadedPdf.setDocumentInformation(info);
 	    uploadedPdf.setDocumentId(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE); 
+	    
+	    // Add PDF to uploadedPdfs
 	    uploadedPdfs.add(uploadedPdf);
 	    System.out.println("PDF " + uploadedPdf.getDocumentInformation().getTitle()  + " has been added to list of uploaded PDFs");
 	    
 	    System.out.println("Uploadfile - List of uploaded PDFs now contains " + uploadedPdfs.size() + " documents");
 	    
+	    return;
 
 	}
 

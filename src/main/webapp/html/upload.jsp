@@ -1,3 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="org.apache.pdfbox.pdmodel.PDDocument" %>
 <!DOCTYPE html>
 <html>
 
@@ -33,8 +37,59 @@
 
 	<main class="container pb-6">
 	
-	<section class="content py-4">
-		<h1 class="title">Upload PDFs</h1>
+	<section class="content py-2">
+		<h1 class="title is-1">Upload PDFs</h1>
+	</section>
+	
+	<section class="content message">
+			
+			<% String message;
+			if (request.getAttribute("message") == null) {
+				message = " ";
+			} else {
+				message = (String) request.getAttribute("message");
+			}
+			%>
+			
+			<p><%=message %></p>	
+
+	</section>
+	
+	<section class="container pb-4">
+	
+		<div class="content">
+			
+			<% 
+			
+			String divTitle = "";
+			ArrayList<PDDocument> uploadedPDFs;
+			if (session.getAttribute("pdfs") == null) {
+				uploadedPDFs = null;
+				divTitle = "No PDFs uploaded yet";
+			} else {
+				uploadedPDFs = new ArrayList<PDDocument>((ArrayList)session.getAttribute("pdfs")); 
+				divTitle = "PDFs already uploaded and available:";
+			%>
+			<h3 class="title"><%= divTitle %></h3>
+			<ul>
+			<%
+				for (PDDocument pdf : uploadedPDFs) {
+					String pdfTitle = pdf.getDocumentInformation().getTitle();
+			%>
+				<li>
+				<%= pdfTitle %>
+				</li>
+			<%
+				}
+			} 
+			
+			%>
+			</ul>
+			
+		</div>
+			
+			
+
 	</section>
 		
 	<section class="container">
@@ -62,7 +117,7 @@
 				<div class="field">
 					<label class="label" for="file1name">Optional: enter a name for this file</label>
 					<div class="control">
-						<input class="input" type="text" name="file1name"/>
+						<input class="input" type="text" name="file1name" placeholder="e.g. contract"/>
 					</div>
 				</div>
 	
@@ -91,7 +146,7 @@
 				<div class="field">
 					<label class="label" for="file2name">Optional: enter a name for this file</label>
 					<div class="control">
-						<input class="input" type="text" name="file2name"/>
+						<input class="input" type="text" name="file2name" placeholder="e.g. signed_page"/>
 					</div>
 				</div>
 	
@@ -118,7 +173,7 @@
 				<div class="field">
 					<label class="label" for="file3name">Optional: enter a name for this file</label>
 					<div class="control">
-						<input class="input" type="text" name="file3name"/>
+						<input class="input" type="text" name="file3name" placeholder="e.g. financial_report"/>
 					</div>
 				</div>
 	

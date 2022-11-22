@@ -47,7 +47,7 @@
 	
 		<section class="content py-4">
 	
-			<h1 class="title" >About PDFCombinator</h1>
+			<h1 class="title is-1" >About PDFCombinator</h1>
 		
 		</section>
 		

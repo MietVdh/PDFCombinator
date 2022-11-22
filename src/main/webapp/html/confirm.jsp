@@ -46,7 +46,7 @@
 	<main class="container pb-6">
 	
 		<section class="content py-4">
-			<h1 class="title">Welcome to PDFCombinator!</h1>
+			<h1 class="title is-1">Welcome to PDFCombinator!</h1>
 		</section>
 		
 		<section class="content">
