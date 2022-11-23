@@ -36,6 +36,7 @@ public class AccountServlet extends HttpServlet {
 		String message = "";
 		
 		ApplicationDao dao = new ApplicationDao();
+		
 		// Get username for current session
 		HttpSession session = request.getSession();		
 		String username = (String) session.getAttribute("username");
@@ -90,6 +91,8 @@ public class AccountServlet extends HttpServlet {
 		
 		if (!newEmail.equals(email) && !newEmail.equals("") && newEmail != null) {
 			
+			System.out.println("Updating email...");
+			
 			if (dao.getUserByEmail(newEmail) != null) {
 				message += "That email address is already associated with an account\n";
 			} else if (dao.updateEmail(username, newEmail)) {
@@ -108,7 +111,6 @@ public class AccountServlet extends HttpServlet {
 					URI verificationLink = new URI("http://localhost:8080/PDFCombinator/verify?id=" + id + "&code=" + code);
 					link = verificationLink.toString();
 				} catch (URISyntaxException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				
@@ -119,10 +121,9 @@ public class AccountServlet extends HttpServlet {
 				message += "Could not update email\n";
 				System.out.println(message);
 			}
-			// TODO send verification email!
 		}
 		
-		
+		request.setAttribute("message", message);
 		doGet(request, response);
 	}
 

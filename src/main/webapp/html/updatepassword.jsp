@@ -36,7 +36,7 @@
 	<main class="container pb-6">
 	
 		<section class="content py-4">
-			<h1 class="title">Set New Password</h1>
+			<h1 class="title is-1">Set New Password</h1>
 		</section>
 		
 		<section class="content message">

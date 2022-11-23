@@ -33,7 +33,7 @@
 
 	<main class="container pb-6">
 		<section class="content py-4">
-			<h1 class="title">PDFCombinator - Log In</h1>
+			<h1 class="title is-1">PDFCombinator - Log In</h1>
 		</section>
 		
 		<section class="message content">
@@ -47,16 +47,16 @@
 			<form class="box" action="/PDFCombinator/login" method="post">
 			
 				<div class="field">
-					<label class="label" for="username">Username: </label>
+					<label class="label" for="username">Username </label>
 					<div class="control">
-						<input class="input" type="text" id="username" name="username" required/>
+						<input class="input" type="text" id="username" name="username" required placeholder="username"/>
 					</div>
 				</div>
 				
 				<div class="field">
-					<label class="label" for="password">Password: </label>
+					<label class="label" for="password">Password </label>
 					<div class="control">
-						<input class="input" type="password" id="password" name="password" required/>
+						<input class="input" type="password" id="password" name="password" required placeholder="password"/>
 					</div>
 				</div>
 				

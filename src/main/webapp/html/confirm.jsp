@@ -21,23 +21,32 @@
 			<a class="navbar-item" href="/PDFCombinator/about">About</a>
 		</div>
 		<div id="navbarBasicExample" class="navbar-menu is-active">
-	    	
-	      	<div class="navbar-end">
-	      		<a class="navbar-item" href="/PDFCombinator/register">Register</a>
-	      		<a class="navbar-item" href="/PDFCombinator/login">Log In</a>
+			
+			<div class="navbar-end">
+			<% if (session.getAttribute("username") == null) {
+				out.println(
+						"<a class=\"navbar-item\" href=\"/PDFCombinator/register\">Register</a> "
+						+ "<a class=\"navbar-item\" href=\"/PDFCombinator/login\">Log In</a>");
+				
+			} else {
+				out.println(
+						"<a class=\"navbar-item\" href=\"/PDFCombinator/upload\">Upload</a> " 
+						+ "<a class=\"navbar-item\" href=\"/PDFCombinator/account\">Account</a>"
+						+ "<a class=\"navbar-item\" href=\"/PDFCombinator/logout\">Log Out</a>");
+			}
+			%>
+	
 	      	</div>
 	    </div>
 		
 	</nav>
-	
-	
 	
 <!--  Main part of website -->
 
 	<main class="container pb-6">
 	
 		<section class="content py-4">
-			<h1 class="title">Welcome to PDFCombinator!</h1>
+			<h1 class="title is-1">Welcome to PDFCombinator!</h1>
 		</section>
 		
 		<section class="content">

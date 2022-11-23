@@ -32,7 +32,7 @@
 
 	<main class="container pb-6">
 		<section class="content py-4">
-			<h1 class="title">Register</h1>
+			<h1 class="title is-1">Register</h1>
 		</section>	
 		
 		<section class="message content">

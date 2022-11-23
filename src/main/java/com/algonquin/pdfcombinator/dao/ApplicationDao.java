@@ -159,7 +159,6 @@ public class ApplicationDao {
 		try {
 			PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			statement.setString(1, email);
-			System.out.println("DB query: " + statement.toString());
 			
 			// retrieve result
 			ResultSet result = statement.executeQuery();
@@ -257,6 +256,35 @@ public class ApplicationDao {
 		return activated;
 		
 	}
+	
+//	public boolean isActiveUser(String id) {
+//		boolean isActive = false;
+//		
+//		try {
+//			//connect to DB
+//			Connection connection = DBConnection.connectToDB();
+//			
+//			//write insert query to DB
+//			String query = "SELECT * FROM users WHERE uuid = ?";
+//			
+//			
+//			//set parameters with PreparedStatement
+//			PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+//			statement.setString(1, id);
+//					
+//			//execute statement
+//			ResultSet result = statement.executeQuery();
+//			result.first();
+//			if (result.getInt(COL_ACTIVE) == 1) {
+//				isActive = true;
+//			}
+//			
+//		}catch(SQLException e) {
+//			e.printStackTrace();
+//		}
+//		
+//		return isActive;
+//	}
 	
 	public boolean isActiveUser(String username) {
 		boolean isActive = false;
