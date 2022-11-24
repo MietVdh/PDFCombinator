@@ -17,13 +17,12 @@
 
 <!--  Nav Bar  -->
 
-	<nav class="navbar p-4" role="navigation" aria-label="main navigation">
-		<div class="navbar-brand">
-			<a class="navbar-item" href="/PDFCombinator/home">Home</a>
-			<a class="navbar-item" href="/PDFCombinator/about">About</a>
-		</div>
-		<div id="navbarBasicExample" class="navbar-menu is-active">
-			
+	<nav class="navbar py-5 px-6" role="navigation" aria-label="main navigation">
+		<div class="navbar-menu mx-6">
+			<div class="navbar-start">
+				<a class="navbar-item" href="/PDFCombinator/home">Home</a>
+				<a class="navbar-item" href="/PDFCombinator/about">About</a>
+			</div>			
 			<div class="navbar-end">
 				<a class="navbar-item" href="/PDFCombinator/upload">Upload</a>
 				<a class="navbar-item" href="/PDFCombinator/account">Account</a>
@@ -37,7 +36,7 @@
 
 	<main class="container pb-6">
 	
-	<section class="content py-2">
+	<section class="content py-1">
 		<h1 class="title is-1">Upload PDFs</h1>
 	</section>
 	

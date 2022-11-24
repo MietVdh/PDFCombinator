@@ -93,7 +93,6 @@ public class RegisterServlet extends HttpServlet {
 		}
 		else {
 			infoMessage="User registered successfully!";
-			// TODO generate verification email 
 			
 			String id = user.getID().toString();
 			
@@ -104,7 +103,6 @@ public class RegisterServlet extends HttpServlet {
 				link = verificationLink.toString();
 				infoMessage = "Your information has been received. Please check your email inbox and click the verification link to complete the registration process.";
 			} catch (URISyntaxException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
