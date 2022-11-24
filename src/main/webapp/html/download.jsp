@@ -15,13 +15,12 @@
 
 <!--  Nav Bar  -->
 
-	<nav class="navbar p-4" role="navigation" aria-label="main navigation">
-		<div class="navbar-brand">
-			<a class="navbar-item" href="/PDFCombinator/home">Home</a>
-			<a class="navbar-item" href="/PDFCombinator/about">About</a>
-		</div>
-		<div id="navbarBasicExample" class="navbar-menu is-active">
-	    
+	<nav class="navbar py-5 px-6" role="navigation" aria-label="main navigation">
+		<div class="navbar-menu mx-6">
+			<div class="navbar-start">
+				<a class="navbar-item" href="/PDFCombinator/home">Home</a>
+				<a class="navbar-item" href="/PDFCombinator/about">About</a>
+			</div>
 			<div class="navbar-end">
 				<a class="navbar-item" href="/PDFCombinator/upload">Upload</a>
 				<a class="navbar-item" href="/PDFCombinator/account">Account</a>
@@ -34,14 +33,26 @@
 <!--  Main part of website -->
 
 	<main class="container pb-6">
-		<section class="content py-4">
+		<section class="content py-1">
 			<h1 class="title is-1">Download your file</h1>
 		</section>
 		
 		<section class="content">
 		
-			<% System.out.println(session.getAttribute("resultFile")); %>
-			<a href="<%= session.getAttribute("resultFile") %>" download>Download PDF</a>
+			<% 
+			System.out.println(session.getAttribute("filePath")); 
+			String filePath = (String) session.getAttribute("filePath");
+			%>
+			<a href="<%= filePath %>" download >
+				Find your resulting pdf at this link
+    		</a><br>
+    		<a class="button is-link is-light" href="/PDFCombinator/result.pdf" download >
+				<span class="icon">
+      				<i class="fas fa-download" aria-hidden="true"></i>
+    			</span>
+    			<span>Download PDF</span>
+    		</a>
+  
 
 		</section>
 		

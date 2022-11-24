@@ -1,21 +1,24 @@
 @charset "ISO-8859-1";
 
 body {
-	margin: 5em;
-	background-color: lavender;
-	color: black;
+	background-color: #dadff7;
+	color: #232C33;
 }
+
 
 main {
-	margin-left: auto;
-	margin-right: auto;
-	padding: 1em;
+	padding: 5em;
 }
 
-h1 {
-	color: purple;
+.navbar {
+	background-color: #a0c1d1;
 }
+
 
 .title {
-	padding-bottom: 3em;
+	color: #5A7D7C;
+}
+
+.footer {
+	background-color: #a0c1d1;
 }

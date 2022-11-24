@@ -8,21 +8,19 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>PDFCombinator | Home</title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-	<link rel="stylesheet" href="/context/css/styles.css">
+	<link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
 
 <!--  Nav Bar  -->
 
-	<nav class="navbar p-4" role="navigation" aria-label="main navigation">
-		<div class="navbar-brand">
-			<a class="navbar-item" href="/PDFCombinator/home">Home</a>
-			<a class="navbar-item" href="/PDFCombinator/about">About</a>
-		</div>
-		<div id="navbarBasicExample" class="navbar-menu is-active">
-	    	
-			
+	<nav class="navbar py-5 px-6" role="navigation" aria-label="main navigation">
+		<div class="navbar-menu mx-6">
+			<div class="navbar-start">
+				<a class="navbar-item" href="/PDFCombinator/home">Home</a>
+				<a class="navbar-item" href="/PDFCombinator/about">About</a>
+			</div>
 			<div class="navbar-end">
 			<% if (session.getAttribute("username") == null) {
 				out.println(
@@ -46,7 +44,7 @@
 
 	<main class="container pb-6">
 	
-		<section class="content py-4">
+		<section class="content py-1">
 			<h1 class="title is-1" >PDFCombinator</h1>
 		</section>
 		

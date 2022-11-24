@@ -1,12 +1,8 @@
 package com.algonquin.pdfcombinator.servlets;
 
-//import java.io.File;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-//import java.nio.file.Files;
-//import java.nio.file.Path;
-//import java.nio.file.Paths;
-//import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -21,13 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-//import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.pdfbox.Loader;
-//import org.apache.pdfbox.io.MemoryUsageSetting;
 import org.apache.pdfbox.pdmodel.PDDocument;
-//import org.apache.pdfbox.pdmodel.PDPage;
-//import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 
 @MultipartConfig
@@ -42,6 +34,7 @@ public class UploadPdfServlet extends HttpServlet {
 	private String message;
 
 	private List<PDDocument> uploadedPdfs = new ArrayList<>();
+	private List<File> uploadedFiles = new ArrayList<>();
 	
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -65,22 +58,16 @@ public class UploadPdfServlet extends HttpServlet {
 
 		// Upload files and add them to list of uploaded files
 		uploadFile("file1name", "file1", request);
-		System.out.println("DoPost - After uploading file1, pdfs contains " + uploadedPdfs.size() + " docs");
-		
-		
+		System.out.println("DoPost - After uploading file1, pdfs contains " + uploadedPdfs.size() + " docs");				
 		uploadFile("file2name", "file2", request);
-		System.out.println("DoPost - After uploading file2, pdfs contains " + uploadedPdfs.size() + " docs");
-
-		
+		System.out.println("DoPost - After uploading file2, pdfs contains " + uploadedPdfs.size() + " docs");		
 		uploadFile("file3name", "file3", request);
 		System.out.println("DoPost - After uploading file3, pdfs contains " + uploadedPdfs.size() + " docs");
 
-		
-		
-		request.setAttribute("pdfs", uploadedPdfs);
-		
+		// Set session attributes
 		HttpSession session = request.getSession();
 		session.setAttribute("pdfs", uploadedPdfs);
+		session.setAttribute("files", uploadedFiles);
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/html/select.jsp");
 		
@@ -117,17 +104,28 @@ public class UploadPdfServlet extends HttpServlet {
 	    } else {
 	    	fileName = submittedFileName + ".pdf";
 	    }
+	    
+	    // Create new temporary file to store uploaded file	    
+		File uploadedFile = File.createTempFile(fileName + "-", ".pdf");
+		
+		System.out.println("Uploaded file stored at: " + uploadedFile.getAbsolutePath());		
 	        
 	    // Load PDF
-	    InputStream fileContent = filePart.getInputStream();
-	    
+	    InputStream fileContent = filePart.getInputStream();	    
 	    PDDocument uploadedPdf = Loader.loadPDF(fileContent);
+		
+	    // close inputstream
+	    fileContent.close();
 	    
+	    // Set PDF info (title and id)
 	    PDDocumentInformation info = new PDDocumentInformation();
 		info.setTitle(fileName);
 		
 	    uploadedPdf.setDocumentInformation(info);
 	    uploadedPdf.setDocumentId(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE); 
+	    
+	    // Save PDF to file
+	    uploadedPdf.save(uploadedFile);
 	    
 	    // Add PDF to uploadedPdfs
 	    uploadedPdfs.add(uploadedPdf);

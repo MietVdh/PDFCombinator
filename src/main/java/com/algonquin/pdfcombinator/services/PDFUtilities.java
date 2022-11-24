@@ -82,6 +82,7 @@ public class PDFUtilities {
 						}
 					}	
 				}
+
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}			
@@ -92,7 +93,7 @@ public class PDFUtilities {
 	
 	
 	// Adds specified PDF pages to existing array
-	public static void addPdfPages(List<PDPage> pdfPages, PDDocument pdf, String pageNumbers) {
+	public void addPdfPages(List<PDPage> pages, PDDocument pdf, String pageNumbers) {
 		int[] pageNums;
 		
 		// Get correct page numbers
@@ -101,7 +102,7 @@ public class PDFUtilities {
 		// if no pagenumbers entered, include entire document
 		if (pageNums.length == 0) {
 			for (int i = 0; i < pdf.getNumberOfPages(); i++) {
-				pdfPages.add(pdf.getPage(i));
+				pages.add(pdf.getPage(i));
 			}
 		} else {
 			// Add all requested PDF pages to ArrayList
@@ -109,20 +110,17 @@ public class PDFUtilities {
 				// Make sure page number is valid
 				if (pageNum <= pdf.getNumberOfPages()) {
 					// Adjust page number to zero-based
+					System.out.println("In PDFUtilities - addPdfPages - Getting page number " + pageNum);
 					PDPage page = pdf.getPage(pageNum-1);
+					System.out.println("Got the page");
 					try {
-						pdfPages.add(page);
+						pages.add(page);
+						System.out.println("Added the page");
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}	
 			}
-		}
-		
-		
-		// For debugging: print pagenumbers
-		for (int j : pageNums) {
-			System.out.println("Page requested: " + j);
 		}
 		
 		
@@ -152,16 +150,42 @@ public class PDFUtilities {
 				}
 			}	
 		}
+
+		
 		return pdfPages;
+	}
+	
+	
+	// Extract selected pages from PDF and add them to result
+	public PDDocument combinePdfPages(PDDocument pdf, String pageNumbers, PDDocument result) {
+			
+		// Get correct page numbers
+		int[] pageNums = extractPageNums(pageNumbers);
+		
+		// Add all requested PDF pages to ArrayList
+		for (int pageNum : pageNums ) {
+			// Make sure page number is valid
+			if (pageNum <= pdf.getNumberOfPages()) {
+				// Adjust page number to zero-based
+				PDPage page = pdf.getPage(pageNum-1);
+				try {
+					result.addPage(page);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}	
+		}		
+		return result;
 	}
 		
 	
 	// Create combined PDF document from separate PDF pages
-	public static PDDocument createCombinedPDF(List<PDPage> pdfList) {
+	public PDDocument createCombinedPDF(List<PDPage> pdfList) {
 		PDDocument document = new PDDocument();
 		for (PDPage page : pdfList) {
 			document.addPage(page);
 		}
+
 		return document;
 	}
 	
