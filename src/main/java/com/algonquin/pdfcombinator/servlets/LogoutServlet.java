@@ -32,8 +32,7 @@ public class LogoutServlet extends HttpServlet {
 			String attribute = request.getAttributeNames().nextElement();
 			request.removeAttribute(attribute);
 		}
-		
-		
+	
 		
 		request.getRequestDispatcher("/html/index.jsp").forward(request, response);
 	}

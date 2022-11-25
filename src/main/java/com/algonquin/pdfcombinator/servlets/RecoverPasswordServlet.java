@@ -1,6 +1,7 @@
 package com.algonquin.pdfcombinator.servlets;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -30,19 +31,31 @@ public class RecoverPasswordServlet extends HttpServlet {
 		ApplicationDao dao = new ApplicationDao();
 		
 		System.out.println("ID: " + id + " \n Code: " + code);
-		if (dao.verifyCode(id, code)) {
-			System.out.println("Code verified");
-			
-		} else {
-			System.out.println("We were not able to verify that code. Please try again");
-			request.getRequestDispatcher("/").forward(request, response);
-			return;
+		//added try/catch as appDAO changed
+		try {
+			if (dao.verifyCode(id, code)) {
+				System.out.println("Code verified");
+
+			} else {
+				System.out.println("We were not able to verify that code. Please try again");
+				request.getRequestDispatcher("/").forward(request, response);
+				return;
+			}
+		} catch (ServletException | IOException e) {
+			e.printStackTrace();
 		}
-		
-		String username = dao.getUserById(id).getUserName();		
-		request.setAttribute("username", username);
-		System.out.println("username in RecoverPassword doGet: " + username);
-		request.getRequestDispatcher("/html/updatepassword.jsp").forward(request, response);
+
+		String username;
+		//added try/catch as appDAO changed
+		try {
+			username = dao.getUserById(id).getUserName();
+
+			request.setAttribute("username", username);
+			System.out.println("username in RecoverPassword doGet: " + username);
+			request.getRequestDispatcher("/html/updatepassword.jsp").forward(request, response);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
@@ -67,14 +80,19 @@ public class RecoverPasswordServlet extends HttpServlet {
 			return;
 		} else {
 			ApplicationDao dao = new ApplicationDao();
-			if (dao.updatePassword(username, password1)) {
-				message = "Your password has been updated";
-				request.setAttribute("message", message);
-				request.getRequestDispatcher("/").forward(request, response);
-			} else {
-				message = "Sorry, something went wrong. Please try again.";
-				request.setAttribute("message", message);
-				request.getRequestDispatcher("/html/updatepassword.jsp").forward(request, response);
+			//added try/catch as appDAO changed
+			try {
+				if (dao.updatePassword(username, password1)) {
+					message = "Your password has been updated";
+					request.setAttribute("message", message);
+					request.getRequestDispatcher("/").forward(request, response);
+				} else {
+					message = "Sorry, something went wrong. Please try again.";
+					request.setAttribute("message", message);
+					request.getRequestDispatcher("/html/updatepassword.jsp").forward(request, response);
+				}
+			} catch (SQLException | ServletException | IOException e) {
+				e.printStackTrace();
 			}
 		}
 		

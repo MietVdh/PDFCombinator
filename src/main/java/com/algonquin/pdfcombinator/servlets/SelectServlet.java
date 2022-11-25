@@ -54,7 +54,6 @@ public class SelectServlet extends HttpServlet {
 		System.out.println("In SelectServlet doPost()");
 		
 		PDDocument resultPDF = new PDDocument();
-//		List<PDPage> resultPages = new ArrayList<>();
 		
 		session = request.getSession();
 		
@@ -80,30 +79,6 @@ public class SelectServlet extends HttpServlet {
 			
 		}
 		
-		
-		/*
-		 * Uses old code
-		// Access form input and add selected pages to ArrayList 
-		for (int i=1; i<=uploadedPdfs.size()*2 && i < 7; i++) {
-			String fileSelect = "select-file-" + i;
-			String pageSelect = "select-page-" + i;
-			if (request.getParameter(fileSelect) != null && !request.getParameter(fileSelect).equals("")) {
-				addSelectedPdfPages(uploadedPdfs, resultPages, request.getParameter(fileSelect), request.getParameter(pageSelect));
-				
-				// For debugging
-				System.out.println(fileSelect + ": " + request.getParameter(fileSelect));
-				System.out.println(pageSelect + ": " + request.getParameter(pageSelect));
-				System.out.println("number of resultpages: " + resultPages.size());
-			} else {
-				System.out.println("No file selected for " + fileSelect);
-			}
-			
-		}
-		
-		resultPDF = PDFutil.createCombinedPDF(resultPages);
-		
-		*/
-
 		System.out.println("Result PDF pages: " + resultPDF.getNumberOfPages());
 		
 		File resultFile = File.createTempFile(newFileName + "-", ".pdf");
@@ -125,26 +100,6 @@ public class SelectServlet extends HttpServlet {
 		
 		request.getRequestDispatcher("/html/download.jsp").forward(request, response);
 	}
-	
-		
-	/* Old code
-	private void addSelectedPdfPages(List<PDDocument> pdfs, List<PDPage> pages, String fileId, String pageNumbers) {
-				
-		System.out.println("In addSelectedPdfPages() in SelectServlet");
-		System.out.println("File ID: " + fileId);
-		
-		for (PDDocument pdf : pdfs) {
-			System.out.println("PDF ID: " + pdf.getDocumentId());
-			if (pdf.getDocumentId().toString().equals(fileId)) {
-				System.out.println("Selected file - getting pages " + pageNumbers);
-				PDFutil.addPdfPages(pages, pdf, pageNumbers);
-				break;
-			}
-		}		
-		
-	}
-	
-	*/
 	
 	private PDDocument getSelectedPdf(List<PDDocument> pdfs, String fileId) {
 		
