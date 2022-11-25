@@ -39,12 +39,9 @@ public class SelectServlet extends HttpServlet {
 		
 		
 		System.out.println("In SelectServlet doGet()");
-		// Get "files" attribute from forwarded request
 		session = request.getSession();
 
 		uploadedPdfs = new ArrayList<PDDocument>((List<PDDocument>)session.getAttribute("pdfs"));
-//		uploadedFiles = new ArrayList<File>((List<File>) session.getAttribute("files"));
-		
 		
 		request.getRequestDispatcher("/html/select.jsp").forward(request, response);
 		
@@ -117,7 +114,7 @@ public class SelectServlet extends HttpServlet {
 		resultPDF.close();
 	
 		File tempFolder = (File) getServletContext().getAttribute(ServletContext.TEMPDIR);
-		File tempFile = new File(tempFolder, "result.pdf");
+		File tempFile = new File(tempFolder, newFileName + ".pdf");
 		
 		Files.copy(Paths.get(resultPath), Paths.get(tempFile.getAbsolutePath()), StandardCopyOption.REPLACE_EXISTING);
 							
