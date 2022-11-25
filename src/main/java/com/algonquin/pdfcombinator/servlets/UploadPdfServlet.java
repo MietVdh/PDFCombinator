@@ -34,7 +34,6 @@ public class UploadPdfServlet extends HttpServlet {
 	private String message;
 
 	private List<PDDocument> uploadedPdfs = new ArrayList<>();
-	private List<File> uploadedFiles = new ArrayList<>();
 	
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -67,7 +66,6 @@ public class UploadPdfServlet extends HttpServlet {
 		// Set session attributes
 		HttpSession session = request.getSession();
 		session.setAttribute("pdfs", uploadedPdfs);
-		session.setAttribute("files", uploadedFiles);
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/html/select.jsp");
 		

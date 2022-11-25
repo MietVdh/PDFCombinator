@@ -47,10 +47,6 @@
 			<form class="box" action="/PDFCombinator/select" method="post">
 			<% 
 			List<PDDocument> pdfs = (ArrayList)session.getAttribute("pdfs");
-			// Iterator<PDDocument> iterator = pdfs.iterator();
-
-			// while (iterator.hasNext()) {
-			// 	PDDocument pdf = iterator.next();
 			
 			for (int i = 1; i <= (pdfs.size() * 2) && i < 7; i++) {
 			%>
@@ -65,8 +61,9 @@
 									for (PDDocument pdfDoc : pdfs) {
 										String id = pdfDoc.getDocumentId().toString();
 										String title = pdfDoc.getDocumentInformation().getTitle();
+										int size = pdfDoc.getNumberOfPages();
 								%>
-										<option value="<%= id %>"> <%= title %></option>
+										<option value="<%= id %>"> <%= title %> (<%=size %> pages)</option>
 								<%
 									}
 								 %>

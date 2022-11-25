@@ -43,9 +43,9 @@
 			System.out.println(session.getAttribute("filePath")); 
 			String filePath = (String) session.getAttribute("filePath");
 			%>
-			<a href="<%= filePath %>" download >
-				Find your resulting pdf at this link
-    		</a><br>
+			
+			<p>	Find your resulting pdf at this link: <%= filePath %> </p>
+    		<br>
     		<a class="button is-link is-light" href="/PDFCombinator/result.pdf" download >
 				<span class="icon">
       				<i class="fas fa-download" aria-hidden="true"></i>
