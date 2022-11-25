@@ -1,6 +1,7 @@
 package com.algonquin.pdfcombinator.servlets;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,11 +27,17 @@ public class VerifyEmailServlet extends HttpServlet {
 		ApplicationDao dao = new ApplicationDao();
 		
 		System.out.println("ID: " + id + " \n Code: " + code);
-		if (dao.verifyCode(id, code)) {
-			System.out.println("Email verified");
-			dao.updateVerifiedEmail(id, code);
-		} else {
-			System.out.println("We were not able to verify that email address");
+		//added try/catch as appDAO changed
+		try {
+			if (dao.verifyCode(id, code)) {
+				System.out.println("Email verified");
+				dao.updateVerifiedEmail(id, code);
+			} else {
+				System.out.println("We were not able to verify that email address");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		request.getRequestDispatcher("/html/verify.jsp").forward(request, response);

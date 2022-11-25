@@ -23,38 +23,18 @@ public class DBConnection {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public Connection getConnection() {
 		return connection;
 	}
-	
-	public static DBConnection getInstance() throws SQLException{
-		if(instance == null) {
+
+	public static DBConnection getInstance() throws SQLException {
+		if (instance == null) {
 			instance = new DBConnection();
 		} else if (instance.getConnection().isClosed()) {
 			instance = new DBConnection();
 		}
 		return instance;
 	}
-
-//	public static Connection connectToDB() {
-//
-//		Connection connection = null;
-//
-//		try {
-//			Class.forName("com.mysql.cj.jdbc.Driver");
-//			connection = DriverManager.getConnection(CONN_STRING, USERNAME, PASSWORD);
-//		} catch (ClassNotFoundException e) {
-//			e.printStackTrace();
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//
-//		if (connection != null) {
-//			System.out.println("Connected!");
-//		}
-//		return connection;
-//
-//	}
 
 }

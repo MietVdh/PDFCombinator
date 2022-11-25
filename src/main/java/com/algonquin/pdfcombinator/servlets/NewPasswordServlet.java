@@ -1,6 +1,7 @@
 package com.algonquin.pdfcombinator.servlets;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,16 +39,28 @@ public class NewPasswordServlet extends HttpServlet {
 		ApplicationDao dao = new ApplicationDao();
 		
 		if (newPassword.equals(newPasswordConfirmation)) {
-			if (dao.updatePassword(username, newPassword)) {
-				message = "Password updated successfully";
-				request.setAttribute("message", message);
-				request.getRequestDispatcher("/login").forward(request, response);
-				return;
-			} else {
-				message = "Sorry, something went wrong. Please try again";
-				request.setAttribute("message", message);
-				request.getRequestDispatcher("/").forward(request, response);
-				return;
+			//added try/catch as appDAO changed
+			try {
+				if (dao.updatePassword(username, newPassword)) {
+					message = "Password updated successfully";
+					request.setAttribute("message", message);
+					request.getRequestDispatcher("/login").forward(request, response);
+					return;
+				} else {
+					message = "Sorry, something went wrong. Please try again";
+					request.setAttribute("message", message);
+					request.getRequestDispatcher("/").forward(request, response);
+					return;
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ServletException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		} else {
 			message = "Passwords don't match.";

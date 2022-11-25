@@ -64,7 +64,8 @@ public class RegisterServlet extends HttpServlet {
 		} 
 
 		// fill it up in a User bean
-		User user = new User(first, last, userName, email, password);
+		//UserBuilder 
+		User user = new User.UserBuilder(first, last, userName, email, password).build();
 		
 		// call DAO layer and save the user object to DB
 		ApplicationDao dao = new ApplicationDao();
