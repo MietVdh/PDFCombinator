@@ -9,24 +9,32 @@ public class DBConnection {
 	private static final String USERNAME = "dbuser";
 	private static final String PASSWORD = "dbpassword";
 	private static final String CONN_STRING = "jdbc:mysql://localhost:3306/pdfcombinator";
-	
-	public static Connection connectToDB(){
-		
-		Connection connection = null;
-		
+
+	private static DBConnection instance;
+	private Connection connection;
+
+	private DBConnection() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			connection = DriverManager.getConnection(CONN_STRING, USERNAME, PASSWORD);
+			this.connection = DriverManager.getConnection(CONN_STRING, USERNAME, PASSWORD);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-		} catch(SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		if(connection!=null) {
-			System.out.println("Connected!");
-		}
-		return connection;
-		
 	}
+
+	public Connection getConnection() {
+		return connection;
+	}
+
+	public static DBConnection getInstance() throws SQLException {
+		if (instance == null) {
+			instance = new DBConnection();
+		} else if (instance.getConnection().isClosed()) {
+			instance = new DBConnection();
+		}
+		return instance;
+	}
+
 }

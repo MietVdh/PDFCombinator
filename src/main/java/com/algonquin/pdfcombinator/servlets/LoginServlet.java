@@ -1,6 +1,7 @@
 package com.algonquin.pdfcombinator.servlets;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,8 +35,7 @@ public class LoginServlet extends HttpServlet {
 		} else {
 			// user is logged in - send to account page
 			request.getRequestDispatcher("/html/account.jsp").forward(request, response);
-		}
-		
+		}		
 		
 	}
 
@@ -48,24 +48,31 @@ public class LoginServlet extends HttpServlet {
 		
 		// Search for user in database 
 		ApplicationDao dao = new ApplicationDao();
-		boolean isValidUser = dao.validateUser(username, password);
-		boolean isActiveUser = dao.isActiveUser(username);
+		boolean isValidUser;
 		
-		if (!isValidUser) {
-			//error
-			errorMessage = "Invalid username or password. Please try again.";
-			request.setAttribute("error", errorMessage);
-			doGet(request, response);
-		} else if (!isActiveUser) {
-			errorMessage = "Please click the link in the verification email to complete the registration process";
-			request.setAttribute("error", errorMessage);
-			doGet(request, response);
-		} else {
-			// log in
-			HttpSession session = request.getSession();
-			
-			session.setAttribute("username", username);
-			request.getRequestDispatcher("/html/account.jsp").forward(request, response);
+		//added try/catch as appDAO changed
+		try {
+			isValidUser = dao.validateUser(username, password);
+
+			boolean isActiveUser = dao.isActiveUser(username);
+
+			if (!isValidUser) {
+				// error
+				errorMessage = "Invalid username or password. Please try again.";
+				request.setAttribute("error", errorMessage);
+				doGet(request, response);
+			} else if (!isActiveUser) {
+				errorMessage = "Please click the link in the verification email to complete the registration process";
+				request.setAttribute("error", errorMessage);
+				doGet(request, response);
+			} else {
+				// log in
+				HttpSession session = request.getSession();
+				session.setAttribute("username", username);
+				request.getRequestDispatcher("/html/account.jsp").forward(request, response);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 
 	}

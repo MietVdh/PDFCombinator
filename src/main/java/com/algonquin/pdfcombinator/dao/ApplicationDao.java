@@ -25,7 +25,7 @@ public class ApplicationDao {
 		
 		try {
 			//connect to DB
-			Connection connection = DBConnection.connectToDB();
+			Connection connection = DBConnection.getInstance().getConnection();
 			
 			//write insert query to DB
 			String insertQuery = "INSERT INTO users (uuid, first_name, last_name, username, password, new_email, code ) VALUES(?,?,?,?,?,?,?)";
@@ -54,13 +54,15 @@ public class ApplicationDao {
 	public boolean verifyCode(String id, String code) {
 		boolean verified = false;
 		
-		// connect to DB
-		Connection connection = DBConnection.connectToDB();
 		
-		// Query DB
-		String query = "SELECT * FROM users WHERE uuid = ? AND code = ?";
 		
 		try {
+			
+			// connect to DB
+			Connection connection = DBConnection.getInstance().getConnection();
+			
+			// Query DB
+			String query = "SELECT * FROM users WHERE uuid = ? AND code = ?";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setString(1, id);
 			statement.setString(2,  code);
@@ -84,7 +86,7 @@ public class ApplicationDao {
 		
 		try {
 			//connect to DB
-			Connection connection = DBConnection.connectToDB();
+			Connection connection = DBConnection.getInstance().getConnection();
 			
 			//write insert query to DB
 			String query = "SELECT * FROM users WHERE username = ?";
@@ -110,13 +112,15 @@ public class ApplicationDao {
 		
 		User user = new User();
 		
-		// connect to DB
-		Connection connection = DBConnection.connectToDB();
 		
-		// Query DB
-		String query = "SELECT * FROM users WHERE username = ?";
 		
 		try {
+			// connect to DB
+			Connection connection = DBConnection.getInstance().getConnection();
+			
+			// Query DB
+			String query = "SELECT * FROM users WHERE username = ?";
+			
 			PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			statement.setString(1, username);
 			
@@ -146,12 +150,12 @@ public class ApplicationDao {
 		return user;
 	}
 	
-	public User getUserByEmail(String email) {
+	public User getUserByEmail(String email) throws SQLException {
 		
 		User user = new User();
 		
 		// connect to DB
-		Connection connection = DBConnection.connectToDB();
+		Connection connection = DBConnection.getInstance().getConnection();
 		
 		// Query DB
 		String query = "SELECT * FROM users WHERE email = ? ";
@@ -190,12 +194,12 @@ public class ApplicationDao {
 		return user;
 	}
 	
-	public User getUserById(String id) {
+	public User getUserById(String id) throws SQLException {
 	
 		User user = new User();
 		
 		// connect to DB
-		Connection connection = DBConnection.connectToDB();
+		Connection connection = DBConnection.getInstance().getConnection();
 		
 		// Query DB
 		String query = "SELECT * FROM users WHERE uuid = ?";
@@ -230,11 +234,11 @@ public class ApplicationDao {
 		return user;
 	}
 
-	public boolean activateAccount(String id) {
+	public boolean activateAccount(String id) throws SQLException {
 		boolean activated = false;
 		
 		//connect to DB
-		Connection connection = DBConnection.connectToDB();
+		Connection connection = DBConnection.getInstance().getConnection();
 		
 		//write insert query to DB
 		String query = "UPDATE users SET is_active = 1 WHERE uuid = ?";
@@ -256,42 +260,14 @@ public class ApplicationDao {
 		return activated;
 		
 	}
-	
-//	public boolean isActiveUser(String id) {
-//		boolean isActive = false;
-//		
-//		try {
-//			//connect to DB
-//			Connection connection = DBConnection.connectToDB();
-//			
-//			//write insert query to DB
-//			String query = "SELECT * FROM users WHERE uuid = ?";
-//			
-//			
-//			//set parameters with PreparedStatement
-//			PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-//			statement.setString(1, id);
-//					
-//			//execute statement
-//			ResultSet result = statement.executeQuery();
-//			result.first();
-//			if (result.getInt(COL_ACTIVE) == 1) {
-//				isActive = true;
-//			}
-//			
-//		}catch(SQLException e) {
-//			e.printStackTrace();
-//		}
-//		
-//		return isActive;
-//	}
+
 	
 	public boolean isActiveUser(String username) {
 		boolean isActive = false;
 		
 		try {
 			//connect to DB
-			Connection connection = DBConnection.connectToDB();
+			Connection connection = DBConnection.getInstance().getConnection();
 			
 			//write insert query to DB
 			String query = "SELECT * FROM users WHERE username = ?";
@@ -316,11 +292,11 @@ public class ApplicationDao {
 		
 	}
 	
-	public boolean validateUser(String username, String password) {
+	public boolean validateUser(String username, String password) throws SQLException {
 		boolean validated = false;
 		
 		// connect to DB
-		Connection connection = DBConnection.connectToDB();
+		Connection connection = DBConnection.getInstance().getConnection();
 		
 		// Query DB
 		String query = "SELECT * FROM users WHERE username = ? AND password = ?";
@@ -344,12 +320,12 @@ public class ApplicationDao {
 		return validated;
 	}
 	
-	public boolean updateUsername(String oldUsername, String newUsername) {
+	public boolean updateUsername(String oldUsername, String newUsername) throws SQLException {
 		boolean success = false;
 		if (isUsernameAvailable(newUsername)) {
 			
 			//connect to DB
-			Connection connection = DBConnection.connectToDB();
+			Connection connection = DBConnection.getInstance().getConnection();
 			
 			//write insert query to DB
 			String query = "UPDATE users SET username = ? WHERE username = ?";
@@ -371,10 +347,10 @@ public class ApplicationDao {
 		
 	}
 	
-	public boolean updateFirstName(String username, String newFirstName) {
+	public boolean updateFirstName(String username, String newFirstName) throws SQLException {
 		boolean success = false;
 		//connect to DB
-		Connection connection = DBConnection.connectToDB();
+		Connection connection = DBConnection.getInstance().getConnection();
 		
 		//write insert query to DB
 		String query = "UPDATE users SET first_name = ? WHERE username = ?";
@@ -396,10 +372,11 @@ public class ApplicationDao {
 		
 	}
 	
-	public boolean updateLastName(String username, String newLastName) {
+	public boolean updateLastName(String username, String newLastName) throws SQLException {
 		boolean success = false;
+		
 		//connect to DB
-		Connection connection = DBConnection.connectToDB();
+		Connection connection = DBConnection.getInstance().getConnection();
 		
 		//write insert query to DB
 		String query = "UPDATE users SET last_name = ? WHERE username = ?";
@@ -421,10 +398,10 @@ public class ApplicationDao {
 		
 	}
 	
-	public boolean updateEmail(String username, String newEmail) {
+	public boolean updateEmail(String username, String newEmail) throws SQLException {
 		boolean success = false;
 		//connect to DB
-		Connection connection = DBConnection.connectToDB();
+		Connection connection = DBConnection.getInstance().getConnection();
 		
 		//write insert query to DB
 		String query = "UPDATE users SET new_email = ? WHERE username = ?";
@@ -445,10 +422,10 @@ public class ApplicationDao {
 		return success;		
 	}
 	
-	public boolean updateVerifiedEmail(String id, String code) {
+	public boolean updateVerifiedEmail(String id, String code) throws SQLException {
 		boolean success = false;
 		//connect to DB
-		Connection connection = DBConnection.connectToDB();
+		Connection connection = DBConnection.getInstance().getConnection();
 		
 		// select query to retrieve new email
 		
@@ -494,10 +471,10 @@ public class ApplicationDao {
 		return success;		
 	}
 
-	public boolean updateCode(String username, String code) {
+	public boolean updateCode(String username, String code) throws SQLException {
 		boolean success = false;
 		//connect to DB
-		Connection connection = DBConnection.connectToDB();
+		Connection connection = DBConnection.getInstance().getConnection();
 		
 		//write insert query to DB
 		String query = "UPDATE users SET code = ? WHERE username = ?";
@@ -519,10 +496,10 @@ public class ApplicationDao {
 		
 	}
 	
-	public boolean updatePassword(String username, String password) {
+	public boolean updatePassword(String username, String password) throws SQLException {
 		boolean success = false;
 		//connect to DB
-		Connection connection = DBConnection.connectToDB();
+		Connection connection = DBConnection.getInstance().getConnection();
 		
 		//write insert query to DB
 		String query = "UPDATE users SET password = ? WHERE username = ?";
@@ -545,11 +522,11 @@ public class ApplicationDao {
 		
 	}
 		
-	public boolean deleteUser(String username) {
+	public boolean deleteUser(String username) throws SQLException {
 		boolean success = false;
 		
 		//connect to DB
-		Connection connection = DBConnection.connectToDB();
+		Connection connection = DBConnection.getInstance().getConnection();
 		
 		//write query to DB
 		String query = "DELETE FROM users WHERE username=?";
@@ -569,11 +546,11 @@ public class ApplicationDao {
 		return success;
 	}
 	
-	public boolean addCode(String code, String email) {
+	public boolean addCode(String code, String email) throws SQLException {
 		boolean success = false;
 		
 		//connect to DB
-		Connection connection = DBConnection.connectToDB();
+		Connection connection = DBConnection.getInstance().getConnection();
 		
 		//write insert query to DB
 		String query = "UPDATE users SET code=? WHERE email=?";

@@ -1,6 +1,7 @@
 package com.algonquin.pdfcombinator.servlets;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,25 +39,34 @@ public class DeleteServlet extends HttpServlet {
 		
 		// Check that password is correct
 		ApplicationDao dao = new ApplicationDao();
-		if (dao.validateUser(username, password)) {
-			// Delete account
-			if (dao.deleteUser(username)) {
-				message = "Your account has been successfully deleted.";
-				request.setAttribute("message", message);
-				request.getRequestDispatcher("/html/delete.jsp").forward(request, response);
-				
-				// Invaidate session
-				request.getSession().invalidate();
-				return;
-			} else {
-				message = "We're sorry, something went wrong. Please try again.";
-				request.setAttribute("message", message);
-				request.getRequestDispatcher("/html/account.jsp").forward(request, response);
-				return;
+		//added try/catch as appDAO changed
+		try {
+			if (dao.validateUser(username, password)) {
+				// Delete account
+				if (dao.deleteUser(username)) {
+					message = "Your account has been successfully deleted.";
+					request.setAttribute("message", message);
+					request.getRequestDispatcher("/html/delete.jsp").forward(request, response);
+					
+					// Invaidate session
+					request.getSession().invalidate();
+					return;
+				} else {
+					message = "We're sorry, something went wrong. Please try again.";
+					request.setAttribute("message", message);
+					request.getRequestDispatcher("/html/account.jsp").forward(request, response);
+					return;
+				}
 			}
-		}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ServletException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
 		
-		
+		// Forward user to webpage confirming account deletion	
 		doGet(request, response);
 	}
 
