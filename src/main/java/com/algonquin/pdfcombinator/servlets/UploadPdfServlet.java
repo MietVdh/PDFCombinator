@@ -33,16 +33,26 @@ public class UploadPdfServlet extends HttpServlet {
 	
 	private String message;
 
-	private List<PDDocument> uploadedPdfs = new ArrayList<>();
+
+	private List<PDDocument> uploadedPdfs;
 	
 	
+	@SuppressWarnings("unchecked")
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		HttpSession session = request.getSession();
+		if (session.getAttribute("pdfs") != null) {
+			uploadedPdfs = (List<PDDocument>) session.getAttribute("pdfs");
+		} else {
+			uploadedPdfs = new ArrayList<PDDocument>();
+		}
 		
 		System.out.println("In UploadServlet doGet()");
 		request.getRequestDispatcher("/html/upload.jsp").forward(request, response);
 	}
 	
-	
+
+	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		System.out.println("In UploadServlet doPost()");
@@ -53,7 +63,14 @@ public class UploadPdfServlet extends HttpServlet {
 			System.out.println(message);
 			return;
 		}
-		
+
+		HttpSession session = request.getSession();
+		if (session.getAttribute("pdfs") != null) {
+			uploadedPdfs = (List<PDDocument>) session.getAttribute("pdfs");
+		} else {
+			uploadedPdfs = new ArrayList<PDDocument>();
+		}
+
 
 		// Upload files and add them to list of uploaded files
 		uploadFile("file1name", "file1", request);
@@ -64,7 +81,6 @@ public class UploadPdfServlet extends HttpServlet {
 		System.out.println("DoPost - After uploading file3, pdfs contains " + uploadedPdfs.size() + " docs");
 
 		// Set session attributes
-		HttpSession session = request.getSession();
 		session.setAttribute("pdfs", uploadedPdfs);
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/html/select.jsp");

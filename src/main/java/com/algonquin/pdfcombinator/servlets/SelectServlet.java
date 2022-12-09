@@ -23,7 +23,8 @@ import com.algonquin.pdfcombinator.services.PDFUtilities;
 @WebServlet("/select")
 public class SelectServlet extends HttpServlet {
 	
-	private List<PDDocument> uploadedPdfs = new ArrayList<>();
+
+	private List<PDDocument> uploadedPdfs;
 	
 	/**
 	 * 
@@ -39,9 +40,15 @@ public class SelectServlet extends HttpServlet {
 		
 		
 		System.out.println("In SelectServlet doGet()");
-		session = request.getSession();
 
-		uploadedPdfs = new ArrayList<PDDocument>((List<PDDocument>)session.getAttribute("pdfs"));
+		HttpSession session = request.getSession();
+		if (session.getAttribute("pdfs") != null) {
+			uploadedPdfs = (List<PDDocument>) session.getAttribute("pdfs");
+		} else {
+			uploadedPdfs = new ArrayList<PDDocument>();
+			request.getRequestDispatcher("/html/upload.jsp").forward(request, response);
+		}
+
 		
 		request.getRequestDispatcher("/html/select.jsp").forward(request, response);
 		
@@ -57,7 +64,8 @@ public class SelectServlet extends HttpServlet {
 		
 		session = request.getSession();
 		
-		uploadedPdfs = new ArrayList<PDDocument>((List<PDDocument>)session.getAttribute("pdfs"));
+		uploadedPdfs = (ArrayList<PDDocument>)session.getAttribute("pdfs");
+
 		
 		System.out.println("Size of list of PDFs: " + uploadedPdfs.size());
 			

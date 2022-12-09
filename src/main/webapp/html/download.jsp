@@ -46,7 +46,9 @@
 			
 			<p>	Find your resulting pdf at this link: <%= filePath %> </p>
     		<br>
-    		<a class="button is-link is-light" href="/PDFCombinator/result.pdf" download >
+
+    		<a class="button is-link is-light" href="<%= filePath %>" download >
+
 				<span class="icon">
       				<i class="fas fa-download" aria-hidden="true"></i>
     			</span>
