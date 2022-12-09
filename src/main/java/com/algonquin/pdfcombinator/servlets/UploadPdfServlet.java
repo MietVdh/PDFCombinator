@@ -33,6 +33,7 @@ public class UploadPdfServlet extends HttpServlet {
 	
 	private String message;
 
+
 	private List<PDDocument> uploadedPdfs;
 	
 	
@@ -50,7 +51,7 @@ public class UploadPdfServlet extends HttpServlet {
 		request.getRequestDispatcher("/html/upload.jsp").forward(request, response);
 	}
 	
-	
+
 	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -62,14 +63,14 @@ public class UploadPdfServlet extends HttpServlet {
 			System.out.println(message);
 			return;
 		}
-		
+
 		HttpSession session = request.getSession();
 		if (session.getAttribute("pdfs") != null) {
 			uploadedPdfs = (List<PDDocument>) session.getAttribute("pdfs");
 		} else {
 			uploadedPdfs = new ArrayList<PDDocument>();
 		}
-		
+
 
 		// Upload files and add them to list of uploaded files
 		uploadFile("file1name", "file1", request);
