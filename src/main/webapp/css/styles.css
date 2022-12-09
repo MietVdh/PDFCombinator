@@ -1,1 +1,24 @@
 @charset "ISO-8859-1";
+
+body {
+	background-color: #dadff7;
+	color: #232C33;
+}
+
+
+main {
+	padding: 5em;
+}
+
+.navbar {
+	background-color: #a0c1d1;
+}
+
+
+.title {
+	color: #5A7D7C;
+}
+
+.footer {
+	background-color: #a0c1d1;
+}

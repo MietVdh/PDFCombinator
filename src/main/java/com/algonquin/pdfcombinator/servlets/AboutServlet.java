@@ -8,17 +8,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/confirm")
-public class ConfirmationServlet extends HttpServlet {
+@WebServlet("/about")
+public class AboutServlet extends HttpServlet {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		getServletContext().getRequestDispatcher("/html/confirm.jsp").forward(request, response);
+		request.getRequestDispatcher("/html/about.jsp").forward(request, response);
 	}
 	
 	
@@ -26,4 +26,5 @@ public class ConfirmationServlet extends HttpServlet {
 		doGet(request, response);
 	}
 	
+
 }
