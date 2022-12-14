@@ -17,8 +17,6 @@
 <body>
 
 	<!--  Nav Bar  -->
-	
-		
 	<nav class="navbar py-5 px-6" role="navigation"
 		aria-label="main navigation">
 			<div class="navbar-start">
