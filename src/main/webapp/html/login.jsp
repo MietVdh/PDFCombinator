@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1" errorPage="error.jsp" isErrorPage="false"%>
 <!DOCTYPE html>
 <html>
 
@@ -9,6 +9,7 @@
 	<title>PDFCombinator | Log In</title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 	<link rel="stylesheet" href="css/styles.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
 </head>
 
 <body>
@@ -18,12 +19,12 @@
 	<nav class="navbar py-5 px-6" role="navigation" aria-label="main navigation">
 		<div class="navbar-menu mx-6">
 			<div class="navbar-start">
-				<a class="navbar-item" href="/PDFCombinator/home">Home</a>
-				<a class="navbar-item" href="/PDFCombinator/about">About</a>
+				<a class="navbar-item" href="/PDFCombinator/home"><i class="fa-sharp fa-solid fa-house"></i>Home</a>
+				<a class="navbar-item" href="/PDFCombinator/about"><i class="fa-solid fa-circle-info"></i>About</a>
 			</div>
 	    	<div class="navbar-end">
-	      		<a class="navbar-item" href="/PDFCombinator/register">Register</a>
-	      		<a class="navbar-item" href="/PDFCombinator/login">Log In</a>
+	      		<a class="navbar-item" href="/PDFCombinator/register"><i class="fa-solid fa-address-card"></i>Register</a>
+	      		<a class="navbar-item" href="/PDFCombinator/login"><i class="fa-solid fa-right-to-bracket"></i>Log In</a>
 	      	</div>
 	    </div>
 		
@@ -66,7 +67,7 @@
 		</section>
 		
 		<section class="content">
-			<a href="/PDFCombinator/resetpassword">Forgot password?</a>		
+			<a class="link" href="/PDFCombinator/resetpassword">Forgot password?</a>		
 		</section>
 		
 		
@@ -78,8 +79,8 @@
 	<footer class="footer">
 	  <div class="content has-text-centered">
 	    <p>
-	      <strong>PDFCombinator</strong> by <a href="https://github.com/v3g4n/">Miet Vanderheyden</a>, <a href="https://github.com/emchyeah">Meigan Cheah</a>, 
-	      and <a href="https://github.com/Serapik">Serap Keskinler</a>. 2022
+	      <strong>PDFCombinator</strong> by <a class="link" href="https://github.com/v3g4n/">Miet Vanderheyden</a>, <a class="link" href="https://github.com/emchyeah">Meigan Cheah</a>, 
+	      and <a class="link" href="https://github.com/Serapik">Serap Keskinler</a>. 2022
 	    </p>
 	  </div>
 	</footer>

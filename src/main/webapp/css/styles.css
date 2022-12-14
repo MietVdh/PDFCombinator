@@ -5,15 +5,53 @@ body {
 	color: #232C33;
 }
 
-
 main {
 	padding: 5em;
 }
 
+h1 {
+	padding-top: 40px;
+}
+
+.button {
+	padding: 10px 24px;
+	color: black;
+	border: 1px solid black;
+	transition-duration: 0.4s;
+}
+
+.button:hover {
+	background-color: #B49DE5;
+	color: black;
+}
+
+a.link:link {
+	color: blue;
+}
+
+a.link:hover {
+	text-decoration: underline;
+}
+
+a.link:visited {
+	color: blue;
+	text-decoration: underline;
+}
+
 .navbar {
+	position: fixed;
+	width: 100%;
 	background-color: #a0c1d1;
 }
 
+.navbar-item:hover {
+	background-color: black;
+	color: black;
+}
+
+.navbar-item {
+	font-weight: bold;
+}
 
 .title {
 	color: #5A7D7C;
@@ -21,4 +59,8 @@ main {
 
 .footer {
 	background-color: #a0c1d1;
+}
+
+.para {
+	font-size: 20px;
 }
