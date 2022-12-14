@@ -17,7 +17,6 @@
 <!--  Nav Bar  -->
 
 	<nav class="navbar py-5 px-6" role="navigation" aria-label="main navigation">
-		<div class="navbar-menu mx-6">
 			<div class="navbar-start">
 				<a class="navbar-item" href="/PDFCombinator/home"><i class="fa-sharp fa-solid fa-house"></i>Home</a>
 				<a class="navbar-item" href="/PDFCombinator/about"><i class="fa-solid fa-circle-info"></i>About</a>
@@ -26,7 +25,6 @@
 	      		<a class="navbar-item" href="/PDFCombinator/register"><i class="fa-solid fa-address-card"></i>Register</a>
 	      		<a class="navbar-item" href="/PDFCombinator/login"><i class="fa-solid fa-right-to-bracket"></i>Log In</a>
 	      	</div>
-	    </div>
 		
 	</nav>
 	

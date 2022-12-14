@@ -39,8 +39,6 @@ a.link:visited {
 }
 
 .navbar {
-	position: fixed;
-	width: 100%;
 	background-color: #a0c1d1;
 }
 

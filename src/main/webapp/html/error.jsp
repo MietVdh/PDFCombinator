@@ -18,7 +18,6 @@
 
 	<nav class="navbar py-5 px-6" role="navigation"
 		aria-label="main navigation">
-		<div class="navbar-menu mx-6">
 			<div class="navbar-start">
 				<a class="navbar-item" href="/PDFCombinator/home"><i
 					class="fa-sharp fa-solid fa-house"></i>Home</a> <a class="navbar-item"
@@ -40,7 +39,6 @@
 				%>
 
 			</div>
-		</div>
 
 	</nav>
 
