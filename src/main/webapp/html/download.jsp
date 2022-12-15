@@ -17,16 +17,24 @@
 <!--  Nav Bar  -->
 
 	<nav class="navbar py-5 px-6" role="navigation" aria-label="main navigation">
-			<div class="navbar-start">
-				<a class="navbar-item" href="/PDFCombinator/home"><i class="fa-sharp fa-solid fa-house"></i>Home</a>
-				<a class="navbar-item" href="/PDFCombinator/about"><i class="fa-solid fa-circle-info"></i>About</a>
-			</div>
+			<div class="navbar-brand">
+			<a class="navbar-item" href="/PDFCombinator/home"><i class="fa-sharp fa-solid fa-house"></i>  Home</a>
+			<a class="navbar-item" href="/PDFCombinator/about"><i class="fa-solid fa-circle-info"></i>  About</a>
+			
+			<a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMain">
+		      <span aria-hidden="true"></span>
+		      <span aria-hidden="true"></span>
+		      <span aria-hidden="true"></span>
+		    </a>
+		</div>
+		<div id="navbarMain" class="navbar-menu">
 			<div class="navbar-end">
-				<a class="navbar-item" href="/PDFCombinator/upload"><i class="fa-solid fa-upload"></i>Upload</a>
-				<a class="navbar-item" href="/PDFCombinator/account"><i class="fa-solid fa-address-card"></i>Account</a>
-				<a class="navbar-item" href="/PDFCombinator/logout"><i class="fa-solid fa-right-from-bracket"></i>Log Out</a>
+				<a class="navbar-item" href="/PDFCombinator/upload"><i class="fa-solid fa-upload"></i>  Upload</a>
+				<a class="navbar-item" href="/PDFCombinator/account"><i class="fa-solid fa-address-card"></i>  Account</a>
+				<a class="navbar-item" href="/PDFCombinator/logout"><i class="fa-solid fa-right-from-bracket"></i>  Log Out</a>
 			</div>
-		
+		</div>
+
 	</nav>
 	
 <!--  Main part of website -->
@@ -54,7 +62,6 @@
     			<span>Download PDF</span>
     		</a>
   
-
 		</section>
 		
 		<section class="content">
@@ -76,4 +83,30 @@
 	</footer>
 
 </body>
+
+<script>
+
+document.addEventListener('DOMContentLoaded', () => {
+
+	  // Get all "navbar-burger" elements
+	  const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+	  // Add a click event on each of them
+	  $navbarBurgers.forEach( el => {
+	    el.addEventListener('click', () => {
+
+	      // Get the target from the "data-target" attribute
+	      const target = el.dataset.target;
+	      const $target = document.getElementById(target);
+
+	      // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+	      el.classList.toggle('is-active');
+	      $target.classList.toggle('is-active');
+
+	    });
+	  });
+
+	});
+</script>
+
 </html>

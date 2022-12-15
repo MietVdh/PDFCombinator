@@ -39,6 +39,8 @@ a.link:visited {
 }
 
 .navbar {
+	position: fixed;
+	width: 100%;
 	background-color: #a0c1d1;
 }
 
@@ -61,4 +63,9 @@ a.link:visited {
 
 .para {
 	font-size: 20px;
+}
+
+i {
+	margin-right: 10px;
+
 }
