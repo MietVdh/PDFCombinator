@@ -34,6 +34,7 @@
 				<a class="navbar-item" href="/PDFCombinator/logout"><i class="fa-solid fa-right-from-bracket"></i>  Log Out</a>
 			</div>
 		</div>
+
 	</nav>
 	
 <!--  Main part of website -->
@@ -54,13 +55,13 @@
     		<br>
 
     		<a class="button is-link is-light" href="<%= filePath %>" download >
+
 				<span class="icon">
       				<i class="fas fa-download" aria-hidden="true"></i>
     			</span>
     			<span>Download PDF</span>
     		</a>
   
-
 		</section>
 		
 		<section class="content">

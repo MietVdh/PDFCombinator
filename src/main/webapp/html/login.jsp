@@ -33,6 +33,7 @@
 	      		<a class="navbar-item" href="/PDFCombinator/login"><i class="fa-solid fa-right-to-bracket"></i>  Log In</a>
 	      	</div>
 		</div>
+
 	</nav>
 	
 <!--  Main part of website -->

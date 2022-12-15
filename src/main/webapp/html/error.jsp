@@ -15,6 +15,7 @@
 
 	<!--  Nav Bar  -->
 
+
 	<nav class="navbar py-5 px-6" role="navigation" aria-label="main navigation">
 		<div class="navbar-brand">
 			<a class="navbar-item" href="/PDFCombinator/home"><i class="fa-sharp fa-solid fa-house"></i>  Home</a>
@@ -31,14 +32,15 @@
 				<%
 				if (session.getAttribute("username") == null) {
 					out.println(
-					"<a class=\"navbar-item\" href=\"/PDFCombinator/register\"><i class=\"fa-solid fa-address-card\"></i>  Register</a> "
-							+ "<a class=\"navbar-item\" href=\"/PDFCombinator/login\"><i class=\"fa-solid fa-right-to-bracket\"></i>  Log In</a>");
+
+					"<a class=\"navbar-item\" href=\"/PDFCombinator/register\"><i class=\"fa-solid fa-address-card\"></i>Register</a> "
+							+ "<a class=\"navbar-item\" href=\"/PDFCombinator/login\"><i class=\"fa-solid fa-right-to-bracket\"></i>Log In</a>");
 
 				} else {
 					out.println(
-					"<a class=\"navbar-item\" href=\"/PDFCombinator/upload\"><i class=\"fa-solid fa-upload\"></i>  Upload</a> "
-							+ "<a class=\"navbar-item\" href=\"/PDFCombinator/account\"><i class=\"fa-solid fa-address-card\"></i>  Account</a>"
-							+ "<a class=\"navbar-item\" href=\"/PDFCombinator/logout\"><i class=\"fa-solid fa-right-from-bracket\"></i>  Log Out</a>");
+					"<a class=\"navbar-item\" href=\"/PDFCombinator/upload\"><i class=\"fa-solid fa-upload\"></i>Upload</a> "
+							+ "<a class=\"navbar-item\" href=\"/PDFCombinator/account\"><i class=\"fa-solid fa-address-card\"></i>Account</a>"
+							+ "<a class=\"navbar-item\" href=\"/PDFCombinator/logout\"><i class=\"fa-solid fa-right-from-bracket\"></i>Log Out</a>");
 				}
 				%>
 
@@ -100,4 +102,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	});
 </script>
+
 </html>

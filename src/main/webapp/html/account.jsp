@@ -36,6 +36,7 @@
 				<a class="navbar-item" href="/PDFCombinator/logout"><i class="fa-solid fa-right-from-bracket"></i>  Log Out</a>
 			</div>
 		</div>
+
 	</nav>
 
 <!--  Main part of website -->
