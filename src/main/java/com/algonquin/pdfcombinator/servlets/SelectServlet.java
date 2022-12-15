@@ -23,7 +23,10 @@ import com.algonquin.pdfcombinator.services.PDFUtilities;
 @WebServlet("/select")
 public class SelectServlet extends HttpServlet {
 	
+
 	private List<PDDocument> uploadedPdfs;
+	
+	Runtime runtime;
 	
 	/**
 	 * 
@@ -39,6 +42,7 @@ public class SelectServlet extends HttpServlet {
 		
 		
 		System.out.println("In SelectServlet doGet()");
+
 		HttpSession session = request.getSession();
 		if (session.getAttribute("pdfs") != null) {
 			uploadedPdfs = (List<PDDocument>) session.getAttribute("pdfs");
@@ -46,7 +50,7 @@ public class SelectServlet extends HttpServlet {
 			uploadedPdfs = new ArrayList<PDDocument>();
 			request.getRequestDispatcher("/html/upload.jsp").forward(request, response);
 		}
-		
+
 		
 		request.getRequestDispatcher("/html/select.jsp").forward(request, response);
 		
@@ -63,6 +67,7 @@ public class SelectServlet extends HttpServlet {
 		session = request.getSession();
 		
 		uploadedPdfs = (ArrayList<PDDocument>)session.getAttribute("pdfs");
+
 		
 		System.out.println("Size of list of PDFs: " + uploadedPdfs.size());
 			
@@ -73,6 +78,10 @@ public class SelectServlet extends HttpServlet {
 		}
 		
 		for (int i=1; i<=uploadedPdfs.size()*2 && i < 7; i++) {
+			// Checking memory usage
+			runtime = Runtime.getRuntime();
+			System.out.println("Total memory: " + runtime.totalMemory());
+			System.out.println("Free memory: " + runtime.freeMemory());
 			String fileSelect = "select-file-" + i;
 			String pageSelect = "select-page-" + i;
 			if (request.getParameter(fileSelect) != null && !request.getParameter(fileSelect).equals("")) {
@@ -85,6 +94,11 @@ public class SelectServlet extends HttpServlet {
 		}
 		
 		System.out.println("Result PDF pages: " + resultPDF.getNumberOfPages());
+		
+		// Checking memory usage
+		runtime = Runtime.getRuntime();
+		System.out.println("Total memory: " + runtime.totalMemory());
+		System.out.println("Free memory: " + runtime.freeMemory());
 		
 		File resultFile = File.createTempFile(newFileName + "-", ".pdf");
 		String resultPath = resultFile.getAbsolutePath();
