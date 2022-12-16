@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 
@@ -64,7 +63,7 @@ public class PDFUtilities {
 		if (file != null) {
 			try {
 				// Load PDF 
-				pdf = Loader.loadPDF(file);
+				pdf = PDDocument.load(file);
 				
 				// Get correct page numbers
 				pageNums = extractPageNums(pageNumbers);

@@ -18,7 +18,6 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 
@@ -131,7 +130,7 @@ public class UploadPdfServlet extends HttpServlet {
 	        
 	    // Load PDF
 	    InputStream fileContent = filePart.getInputStream();	    
-	    PDDocument uploadedPdf = Loader.loadPDF(fileContent);
+	    PDDocument uploadedPdf = PDDocument.load(fileContent);
 		
 	    // close inputstream
 	    fileContent.close();
