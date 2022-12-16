@@ -26,8 +26,6 @@ public class SelectServlet extends HttpServlet {
 
 	private List<PDDocument> uploadedPdfs;
 	
-//	Runtime runtime;
-	
 	/**
 	 * 
 	 */
@@ -39,8 +37,7 @@ public class SelectServlet extends HttpServlet {
 	
 	@SuppressWarnings("unchecked")
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
+				
 		System.out.println("In SelectServlet doGet()");
 
 		HttpSession session = request.getSession();
@@ -50,7 +47,6 @@ public class SelectServlet extends HttpServlet {
 			uploadedPdfs = new ArrayList<PDDocument>();
 			request.getRequestDispatcher("/html/upload.jsp").forward(request, response);
 		}
-
 		
 		request.getRequestDispatcher("/html/select.jsp").forward(request, response);
 		
@@ -67,7 +63,6 @@ public class SelectServlet extends HttpServlet {
 		session = request.getSession();
 		
 		uploadedPdfs = (ArrayList<PDDocument>)session.getAttribute("pdfs");
-
 		
 		System.out.println("Size of list of PDFs: " + uploadedPdfs.size());
 			
@@ -80,10 +75,7 @@ public class SelectServlet extends HttpServlet {
 		newFileName = newFileName + ".pdf";
 		
 		for (int i=1; i<=uploadedPdfs.size()*2 && i < 7; i++) {
-			// Checking memory usage
-//			runtime = Runtime.getRuntime();
-//			System.out.println("Total memory: " + runtime.totalMemory());
-//			System.out.println("Free memory: " + runtime.freeMemory());
+
 			String fileSelect = "select-file-" + i;
 			String pageSelect = "select-page-" + i;
 			if (request.getParameter(fileSelect) != null && !request.getParameter(fileSelect).equals("")) {
@@ -97,11 +89,6 @@ public class SelectServlet extends HttpServlet {
 		
 		System.out.println("Result PDF pages: " + resultPDF.getNumberOfPages());
 		
-		// Checking memory usage
-//		runtime = Runtime.getRuntime();
-//		System.out.println("Total memory: " + runtime.totalMemory());
-//		System.out.println("Free memory: " + runtime.freeMemory());
-		
 		File resultFile = File.createTempFile(newFileName + "-", ".pdf");
 		String resultPath = resultFile.getAbsolutePath();
 		System.out.println("File path (resultPath): " + resultPath);
@@ -112,25 +99,13 @@ public class SelectServlet extends HttpServlet {
 		File tempFolder = (File) getServletContext().getAttribute(ServletContext.TEMPDIR);
 		File tempFile = new File(tempFolder, newFileName);
 		
-		String relativeWebPath = "/tempfiledir";
-		String absoluteDiskPath = getServletContext().getRealPath(relativeWebPath);
-		
-		System.out.println("relative web path: " + relativeWebPath);
-		System.out.println("Absolute disk path: " + absoluteDiskPath);
-		
-		File file = new File(absoluteDiskPath, newFileName);
-		
-		Files.copy(Paths.get(resultPath), Paths.get(file.getAbsolutePath()), StandardCopyOption.REPLACE_EXISTING);
 		Files.copy(Paths.get(resultPath), Paths.get(tempFile.getAbsolutePath()), StandardCopyOption.REPLACE_EXISTING);
 							
-		session.setAttribute("resultFile", file);
-//		session.setAttribute("filePath", relativeWebPath + "/" + newFileName);
 		session.setAttribute("filePath", tempFile.getAbsolutePath());
 		
 		System.out.println("File path (tempFile.getAbsolutePath()): " + tempFile.getAbsolutePath());
 		
 		request.getRequestDispatcher("/html/download.jsp").forward(request, response);
-//		request.getRequestDispatcher("/PDFCombinator/download").forward(request, response);
 	}
 	
 	
