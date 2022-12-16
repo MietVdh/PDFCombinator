@@ -35,8 +35,6 @@ public class UploadPdfServlet extends HttpServlet {
 
 	private List<PDDocument> uploadedPdfs;
 	
-	Runtime runtime;
-	
 	
 	@SuppressWarnings("unchecked")
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -55,9 +53,6 @@ public class UploadPdfServlet extends HttpServlet {
 
 	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		runtime = Runtime.getRuntime();
-		System.out.println("Total memory: " + runtime.totalMemory());
-		System.out.println("Free memory: " + runtime.freeMemory());
 		
 		System.out.println("In UploadServlet doPost()");
 		
@@ -150,11 +145,7 @@ public class UploadPdfServlet extends HttpServlet {
 	    System.out.println("PDF " + uploadedPdf.getDocumentInformation().getTitle()  + " has been added to list of uploaded PDFs");
 	    
 	    System.out.println("Uploadfile - List of uploaded PDFs now contains " + uploadedPdfs.size() + " documents");
-	    
-	    // For debugging: Memory check
-	    runtime = Runtime.getRuntime();
-	    System.out.println("Total memory: " + runtime.totalMemory());
-		System.out.println("Free memory: " + runtime.freeMemory());
+
 	    
 	    return;
 

@@ -61,7 +61,7 @@
 		</section>
 		
 		<section class="content">
-			<p>PDFCombinator is the result of a group project assignment as part of the Computer Programming diploma programme at Algonquin College.
+			<p><a href="https://github.com/v3g4n/PDFCombinator">PDFCombinator</a> is the result of a group project assignment as part of the Computer Programming diploma programme at Algonquin College.
 			Our website allows you to upload PDFs, select the pages you want to use for each of the documents, and combine the documents to create a new PDF.</p>
 	
 		</section>
