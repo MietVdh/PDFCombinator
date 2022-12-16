@@ -26,7 +26,7 @@ public class SelectServlet extends HttpServlet {
 
 	private List<PDDocument> uploadedPdfs;
 	
-	Runtime runtime;
+//	Runtime runtime;
 	
 	/**
 	 * 
@@ -73,15 +73,17 @@ public class SelectServlet extends HttpServlet {
 			
 		String newFileName = request.getParameter("file-name");
 		
-		if (newFileName == null || newFileName.equals("")) {
+		if (newFileName == null || newFileName.equals("") || newFileName.length() < 3) {
 			newFileName = "result";
 		}
 		
+		newFileName = newFileName + ".pdf";
+		
 		for (int i=1; i<=uploadedPdfs.size()*2 && i < 7; i++) {
 			// Checking memory usage
-			runtime = Runtime.getRuntime();
-			System.out.println("Total memory: " + runtime.totalMemory());
-			System.out.println("Free memory: " + runtime.freeMemory());
+//			runtime = Runtime.getRuntime();
+//			System.out.println("Total memory: " + runtime.totalMemory());
+//			System.out.println("Free memory: " + runtime.freeMemory());
 			String fileSelect = "select-file-" + i;
 			String pageSelect = "select-page-" + i;
 			if (request.getParameter(fileSelect) != null && !request.getParameter(fileSelect).equals("")) {
@@ -96,29 +98,43 @@ public class SelectServlet extends HttpServlet {
 		System.out.println("Result PDF pages: " + resultPDF.getNumberOfPages());
 		
 		// Checking memory usage
-		runtime = Runtime.getRuntime();
-		System.out.println("Total memory: " + runtime.totalMemory());
-		System.out.println("Free memory: " + runtime.freeMemory());
+//		runtime = Runtime.getRuntime();
+//		System.out.println("Total memory: " + runtime.totalMemory());
+//		System.out.println("Free memory: " + runtime.freeMemory());
 		
 		File resultFile = File.createTempFile(newFileName + "-", ".pdf");
 		String resultPath = resultFile.getAbsolutePath();
-		System.out.println("File path: " + resultPath);
+		System.out.println("File path (resultPath): " + resultPath);
 		
 		resultPDF.save(resultFile);	
 		resultPDF.close();
-	
-		File tempFolder = (File) getServletContext().getAttribute(ServletContext.TEMPDIR);
-		File tempFile = new File(tempFolder, newFileName + ".pdf");
 		
+		File tempFolder = (File) getServletContext().getAttribute(ServletContext.TEMPDIR);
+		File tempFile = new File(tempFolder, newFileName);
+		
+		String relativeWebPath = "/tempfiledir";
+		String absoluteDiskPath = getServletContext().getRealPath(relativeWebPath);
+		
+		System.out.println("relative web path: " + relativeWebPath);
+		System.out.println("Absolute disk path: " + absoluteDiskPath);
+		
+		File file = new File(absoluteDiskPath, newFileName);
+		
+		Files.copy(Paths.get(resultPath), Paths.get(file.getAbsolutePath()), StandardCopyOption.REPLACE_EXISTING);
 		Files.copy(Paths.get(resultPath), Paths.get(tempFile.getAbsolutePath()), StandardCopyOption.REPLACE_EXISTING);
 							
-		session.setAttribute("resultFile", tempFile);
+		session.setAttribute("resultFile", file);
+//		session.setAttribute("filePath", relativeWebPath + "/" + newFileName);
 		session.setAttribute("filePath", tempFile.getAbsolutePath());
 		
-		System.out.println("File path: " + tempFile.getAbsolutePath());
+		System.out.println("File path (tempFile.getAbsolutePath()): " + tempFile.getAbsolutePath());
 		
 		request.getRequestDispatcher("/html/download.jsp").forward(request, response);
+//		request.getRequestDispatcher("/PDFCombinator/download").forward(request, response);
 	}
+	
+	
+	
 	
 	private PDDocument getSelectedPdf(List<PDDocument> pdfs, String fileId) {
 		
