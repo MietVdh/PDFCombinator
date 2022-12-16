@@ -45,20 +45,9 @@
 		</section>
 		
 		<section class="content">
-		
-			<% 
-			System.out.println(session.getAttribute("filePath")); 
-			String filePath = (String) session.getAttribute("filePath");
-			%>
-			
-			<p>	Find your resulting pdf at this link: <%= filePath %> </p>
-    		<br>
 
-    		<a class="button is-link is-light" href="<%= filePath %>" download >
-
-				<span class="icon">
-      				<i class="fas fa-download" aria-hidden="true"></i>
-    			</span>
+    		<a class="button is-link is-light" href="/PDFCombinator/download" target="_blank" download >
+				<span class="icon"><i class="fas fa-download" aria-hidden="true"></i></span>
     			<span>Download PDF</span>
     		</a>
   

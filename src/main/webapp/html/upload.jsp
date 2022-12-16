@@ -86,10 +86,16 @@
 				</li>
 			<%
 				}
-			} 
-			
 			%>
 			</ul>
+			<br>
+			<a href="/PDFCombinator/select">Select from uploaded files</a>
+			
+			<%
+			}
+			
+			%>
+			
 			
 		</div>
 			
