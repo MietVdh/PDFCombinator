@@ -68,9 +68,7 @@ public class DownloadServlet extends HttpServlet {
          
         inStream.close();
         outStream.close();     
-		
-		
-		request.getRequestDispatcher("/html/download.jsp").forward(request, response);
+
 	}
 
 }
